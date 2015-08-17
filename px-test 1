@@ -190,7 +190,7 @@ gapi.analytics.ready(function() {
 
   /** 
    * Creating a table to display user sessions and total pageviews over
-   * the last 30 days
+   * the last 7 days
    */  
       
   var timeline3 = new gapi.analytics.googleCharts.DataChart({
