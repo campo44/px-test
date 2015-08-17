@@ -222,6 +222,28 @@ gapi.analytics.ready(function() {
     }
     timeline3.set(newIds).execute();
   });
+  
+  
+    /**
+   * Create a new DataChart to show line chart of sessions for past 30 days".
+   */
+  var dataChart1 = new gapi.analytics.googleCharts.DataChart({
+    query: {
+      metrics: 'ga:sessions',
+      dimensions: 'ga:date',
+      'start-date': '30daysAgo',
+      'end-date': 'yesterday'
+    },
+    chart: {
+      container: 'chart-container',
+      type: 'LINE',
+      options: {
+        width: '100%'
+      }
+    }
+  });
+
+  
    
  //alexaddedAS
  
