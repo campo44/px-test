@@ -243,6 +243,53 @@ gapi.analytics.ready(function() {
     }
   });
 
+  /**
+   * Render the dataChart on the page whenever a new view is selected.
+   */
+  viewSelector.on('change', function(ids) {
+      var newIds = {
+      query: {
+        ids: ids
+      }
+    }
+    dataChart1.set(newIds).execute();
+  });
+
+
+
+
+    /**
+   * Create a new DataChart to show new vs returning users".
+   */
+  var pieChart = new gapi.analytics.googleCharts.DataChart({
+    query: {
+      metrics: 'ga:sessions',
+      dimensions: 'ga:userType',
+      'start-date': '30daysAgo',
+      'end-date': 'yesterday'
+    },
+    chart: {
+      container: 'pie-container',
+      type: 'PIE',
+      options: {
+        width: '100%'
+      }
+    }
+  });
+  
+  
+  /**
+   * Render the dataChart on the page whenever a new view is selected.
+   */
+  viewSelector.on('change', function(ids) {
+      var newIds = {
+      query: {
+        ids: ids
+      }
+    }
+    pieChart.set(newIds).execute();
+  });
+
   
    
  //alexaddedAS
