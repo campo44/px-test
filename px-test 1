@@ -259,6 +259,37 @@ gapi.analytics.ready(function() {
   });
 
   
+  
+  /**
+   * Create a new table to show top content".
+   */
+  var topContent = new gapi.analytics.googleCharts.DataChart({
+    query: {
+      metrics: 'ga:pageviews, ga:uniquePageviews, ga:timeOnPage, ga:bounces, ga:entrances, ga:exits',
+      dimensions: 'ga:pagePath',
+      sort: 'ga:pageviews'
+    },
+    chart: {
+      container: 'keyword-container',
+      type: 'TABLE',
+      options: {
+        width: '100%'
+      }
+    }
+  });
+  
+  /**
+   * Render the dataChart on the page whenever a new view is selected.
+   */
+  viewSelector.on('change', function(ids) {
+      var newIds = {
+      query: {
+        ids: ids
+      }
+    }
+    topContent.set(newIds).execute();
+  });
+  
    
  //alexaddedAS
  
