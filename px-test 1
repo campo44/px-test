@@ -291,6 +291,33 @@ gapi.analytics.ready(function() {
   });
   
    
+   
+ /** 
+  * Bar chart that displays sessions by country 
+  */
+   var countries = new gapi.analytics.googleCharts.DataChart({
+    query: {
+      metrics: 'ga:sessions',
+      dimensions: 'ga:country',
+    },
+    chart: {
+      container: 'country-container',
+      type: 'BAR',
+      options: {
+        width: '100%'
+      }
+    }
+  });
+  
+  viewSelector.on('change', function(ids) {
+      var newIds = {
+      query: {
+        ids: ids
+      }
+    }
+    countries.set(newIds).execute();
+  }); 
+   
  //alexaddedAS
  
   
