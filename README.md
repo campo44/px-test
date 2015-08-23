@@ -6,4 +6,5 @@ Please note, this website's code editor is setup so that JavaScript code is sepa
 <li>HelloAnalytics.html is the file used to setup the authorization (OAUTH) needed to integrate GA API's onto the website</li>
 <li>PX-Test 1 contains the JavaScript code used to generate charts, graphs, and tables taken from the groups GA account</li>
 <li>Px-Test 1.html stores the containers that are used to display the charts, graphs and tables </li>
+<li>createGoal stores the code that inserts a goal and its properties from a website </li>
 </ul>
