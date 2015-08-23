@@ -1,0 +1,22 @@
+/*
+ * This request creates a new goal.
+ */
+function insertGoal() {
+  var request = gapi.client.analytics.management.goals.insert(
+    {
+      'accountId': 'johnt94',
+      'webPropertyId': 'UA-66119136-1',
+      'profileId': '106535442',
+      'resource': {
+        'id': '7',
+        'active': false,
+        'name': 'user time on site',
+        'type': 'VISIT_TIME_ON_SITE',
+        'visitTimeOnSiteDetails': {
+          'comparisonType': 'GREATER_THAN',
+          'comparisonValue': 300
+        }
+      }
+    });
+  request.execute(function (response) { // Handle the response. });
+}
