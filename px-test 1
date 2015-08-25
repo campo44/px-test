@@ -31,7 +31,7 @@ src="/public/javascript/embed-api/components/active-users.js"
 gapi.analytics.ready(function() {
 
   // Step 1: Authorize the user.
-
+  //  Enter client ID from your google developers console
   var CLIENT_ID = '571689297980-ur9bp6ab1aqn4g4k7bm0tpapvm4kn15k.apps.googleusercontent.com';
 
   gapi.analytics.auth.authorize({
