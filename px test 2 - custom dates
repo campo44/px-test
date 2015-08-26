@@ -15,10 +15,9 @@ gapi.analytics.ready(function() {
 
 
 
-    /**
-   * Store a set of common DataChart config options since they're shared by
-   * both of the charts we're about to make.
-   */
+   /**
+   * Creates a pie chart to show new vs existing, customisable by entering chosen date ranges
+    */
    
   var pieChartCustomDate = {
     query: {
@@ -110,7 +109,9 @@ gapi.analytics.ready(function() {
   });
 
 
-
+  /**
+   *  Creates a bar chart to show page views, customisable by entering chosen date ranges
+   */
 
 
 var pageViewCustomChart = {
