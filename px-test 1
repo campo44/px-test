@@ -2,163 +2,24 @@
 <html>
 <head>
 
-<!-- First script in the head section contains the authorization code.
-    Second script in the head section containts the JavaScript code that displays the charts and graphs.
+
+<!--
+    First script in the head section containts the JavaScript code that displays the charts and graphs.
+    Second script in the head section contains the sample Core Reporting API and outputs results.
     HTML containers are placed in the body to store each respective chart/graph.
 -->
 
-<!-- First script -->
-<script>
 
-  // Replace with your client ID from google developers console.
-  var CLIENT_ID = '571689297980-ur9bp6ab1aqn4g4k7bm0tpapvm4kn15k.apps.googleusercontent.com';
-
- // Set authorized scope to your website 
-  var SCOPES = ['http://px300579.enjin.com'];
-
-
-  function authorize(event) {
-    // Handles the authorization flow.
-    // `immediate` should be false when invoked from the button click.
-    var useImmdiate = event ? false : true;
-    var authData = {
-      client_id: CLIENT_ID,
-      scope: SCOPES,
-      immediate: useImmdiate
-    };
-
-    gapi.auth.authorize(authData, function(response) {
-      var authButton = document.getElementById('auth-button');
-      if (response.error) {
-        authButton.hidden = false;
-      }
-      else {
-        authButton.hidden = true;
-        queryAccounts();
-      }
-    });
-  }
-
-
-function queryAccounts() {
-  // Load the Google Analytics client library.
-  gapi.client.load('analytics', 'v3').then(function() {
-
-    // Get a list of all Google Analytics accounts for this user
-    gapi.client.analytics.management.accounts.list().then(handleAccounts);
-  });
-}
-
-
-function handleAccounts(response) {
-  // Handles the response from the accounts list method.
-  if (response.result.items && response.result.items.length) {
-    // Get the first Google Analytics account.
-    var firstAccountId = response.result.items[0].id;
-
-    // Query for properties.
-    queryProperties(firstAccountId);
-  } else {
-    console.log('No accounts found for this user.');
-  }
-}
-
-
-function queryProperties(accountId) {
-  // Get a list of all the properties for the account.
-  gapi.client.analytics.management.webproperties.list(
-      {'accountId': accountId})
-    .then(handleProperties)
-    .then(null, function(err) {
-      // Log any errors.
-      console.log(err);
-  });
-}
-
-
-function handleProperties(response) {
-  // Handles the response from the webproperties list method.
-  if (response.result.items && response.result.items.length) {
-
-    // Get the first Google Analytics account
-    var firstAccountId = response.result.items[0].accountId;
-
-    // Get the first property ID
-    var firstPropertyId = response.result.items[0].id;
-
-    // Query for Views (Profiles).
-    queryProfiles(firstAccountId, firstPropertyId);
-  } else {
-    console.log('No properties found for this user.');
-  }
-}
-
-
-function queryProfiles(accountId, propertyId) {
-  // Get a list of all Views (Profiles) for the first property
-  // of the first Account.
-  gapi.client.analytics.management.profiles.list({
-      'accountId': accountId,
-      'webPropertyId': propertyId
-  })
-  .then(handleProfiles)
-  .then(null, function(err) {
-      // Log any errors.
-      console.log(err);
-  });
-}
-
-
-function handleProfiles(response) {
-  // Handles the response from the profiles list method.
-  if (response.result.items && response.result.items.length) {
-    // Get the first View (Profile) ID.
-    var firstProfileId = response.result.items[0].id;
-
-    // Query the Core Reporting API.
-    queryCoreReportingApi(firstProfileId);
-  } else {
-    console.log('No views (profiles) found for this user.');
-  }
-}
-
-
-function queryCoreReportingApi(profileId) {
-  // Query the Core Reporting API for the number sessions for
-  // the past seven days.
-  gapi.client.analytics.data.ga.get({
-    'ids': 'ga:' + profileId,
-    'start-date': '7daysAgo',
-    'end-date': 'today',
-    'metrics': 'ga:sessions'
-  })
-  .then(function(response) {
-    var formattedJson = JSON.stringify(response.result, null, 2);
-    document.getElementById('query-output').value = formattedJson;
-  })
-  .then(null, function(err) {
-      // Log any errors.
-      console.log(err);
-  });
-}
-
-</script>
-
-<script src="https://apis.google.com/js/client.js?onload=authorize"></script>
+<script src="https://ga-dev-tools.appspot.com/public/javascript/embed-api/components/view-selector2.js"></script>
+<script src="https://ga-dev-tools.appspot.com/public/javascript/embed-api/components/date-range-selector.js"></script>
 
 
 
-
-
-
-
-
-
-
-
-<!-- Second script
-  The following code loads the Embed API library and generates the charts, graphs and tables.
+<!-- First script
+    The following code loads the Embed API library and generates the charts, graphs and tables
 -->
+
+
 <script>
     
 
@@ -169,25 +30,6 @@ function queryCoreReportingApi(profileId) {
   js.src='https://apis.google.com/js/platform.js';
   fjs.parentNode.insertBefore(js,fjs);js.onload=function(){g.load('analytics')};
 }(window,document,'script'));
-
-//alex added
-/**
- * <!-- This demo uses the Chart.js graphing library and Moment.js to do date
-     formatting and manipulation. -->
-src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"
-src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"
-
-<!-- Include the ViewSelector2 component script. -->
-src="/public/javascript/embed-api/components/view-selector2.js"
-
-<!-- Include the DateRangeSelector component script. -->
-src="/public/javascript/embed-api/components/date-range-selector.js"
-
-<!-- Include the ActiveUsers component script. -->
-src="/public/javascript/embed-api/components/active-users.js"
-*/
-///^^^alex added
-
 
 
 gapi.analytics.ready(function() {
@@ -206,6 +48,8 @@ gapi.analytics.ready(function() {
   var viewSelector = new gapi.analytics.ViewSelector({
     container: 'view-selector'
   });
+  
+  
 
   // Step 3: Create the timeline chart.
 
@@ -485,11 +329,169 @@ gapi.analytics.ready(function() {
     countries.set(newIds).execute();
   }); 
    
- //alexaddedAS
  
 });
 
+
+
 </script>
+
+
+
+
+
+    <!-- 
+      Second script. Sample of Core Reporting API output
+    -->
+
+<script>
+
+  // Replace with your client ID from google developers console.
+  var CLIENT_ID = '571689297980-ur9bp6ab1aqn4g4k7bm0tpapvm4kn15k.apps.googleusercontent.com';
+
+ // Set authorized scope to your website 
+  var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
+
+
+  function authorize(event) {
+    // Handles the authorization flow.
+    // `immediate` should be false when invoked from the button click.
+    var useImmdiate = event ? false : true;
+    var authData = {
+      client_id: CLIENT_ID,
+      scope: SCOPES,
+      immediate: useImmdiate
+    };
+
+    gapi.auth.authorize(authData, function(response) {
+      var authButton = document.getElementById('auth-button');
+      if (response.error) {
+        authButton.hidden = false;
+      }
+      else {
+        authButton.hidden = true;
+        queryAccounts();
+      }
+    });
+  }
+
+
+function queryAccounts() {
+  // Load the Google Analytics client library.
+  gapi.client.load('analytics', 'v3').then(function() {
+
+    // Get a list of all Google Analytics accounts for this user
+    gapi.client.analytics.management.accounts.list().then(handleAccounts);
+  });
+}
+
+
+function handleAccounts(response) {
+  // Handles the response from the accounts list method.
+  if (response.result.items && response.result.items.length) {
+    // Get the first Google Analytics account.
+    var firstAccountId = response.result.items[0].id;
+
+    // Query for properties.
+    queryProperties(firstAccountId);
+  } else {
+    console.log('No accounts found for this user.');
+  }
+}
+
+
+function queryProperties(accountId) {
+  // Get a list of all the properties for the account.
+  gapi.client.analytics.management.webproperties.list(
+      {'accountId': accountId})
+    .then(handleProperties)
+    .then(null, function(err) {
+      // Log any errors.
+      console.log(err);
+  });
+}
+
+
+function handleProperties(response) {
+  // Handles the response from the webproperties list method.
+  if (response.result.items && response.result.items.length) {
+
+    // Get the first Google Analytics account
+    var firstAccountId = response.result.items[0].accountId;
+
+    // Get the first property ID
+    var firstPropertyId = response.result.items[0].id;
+
+    // Query for Views (Profiles).
+    queryProfiles(firstAccountId, firstPropertyId);
+  } else {
+    console.log('No properties found for this user.');
+  }
+}
+
+
+function queryProfiles(accountId, propertyId) {
+  // Get a list of all Views (Profiles) for the first property
+  // of the first Account.
+  gapi.client.analytics.management.profiles.list({
+      'accountId': accountId,
+      'webPropertyId': propertyId
+  })
+  .then(handleProfiles)
+  .then(null, function(err) {
+      // Log any errors.
+      console.log(err);
+  });
+}
+
+
+function handleProfiles(response) {
+  // Handles the response from the profiles list method.
+  if (response.result.items && response.result.items.length) {
+    // Get the first View (Profile) ID.
+    var firstProfileId = response.result.items[0].id;
+
+    // Query the Core Reporting API.
+    queryCoreReportingApi(firstProfileId);
+  } else {
+    console.log('No views (profiles) found for this user.');
+  }
+}
+
+
+function queryCoreReportingApi(profileId) {
+  // Query the Core Reporting API for the number sessions for
+  // the past seven days.
+  gapi.client.analytics.data.ga.get({
+    'ids': 'ga:' + profileId,
+    'start-date': '7daysAgo',
+    'end-date': 'today',
+    'metrics': 'ga:sessions'
+  })
+  .then(function(response) {
+    var formattedJson = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-output').value = formattedJson;
+  })
+  .then(null, function(err) {
+      // Log any errors.
+      console.log(err);
+  });
+}
+
+  // Add an event listener to the 'auth-button'.
+  document.getElementById('auth-button').addEventListener('click', authorize);
+
+</script>
+
+<script src="https://apis.google.com/js/client.js?onload=authorize"></script>
+
+<button id="auth-button" hidden>Authorize</button>
+
+
+
+
+
+
 
 </head>
 
@@ -503,8 +505,7 @@ gapi.analytics.ready(function() {
 <body>
 
 <h1>PX Prototype</h1>
-<section id="auth-button"></section>
-<p></p>
+
 <section id="view-selector"></section>
 <p></p>
 <p>Sessions per day (past 7 days)</p>
@@ -518,13 +519,7 @@ gapi.analytics.ready(function() {
 <section id="timeline3"></section>
 <p></p>
 <h1>PX Test 2 AS</h1>
-<section id="chart-container"></section>
-<section id="view-selector-container"></section>
-<section id="embed-api-auth-container"></section>
-<section id="data-chart-1-container"></section>
-<section id="date-range-selector-1-container"></section>
-<section id="data-chart-2-container"></section>
-<section id="date-range-selector-2-container"></section>
+
 <p></p>
 <p>New vs Returning users (past 30 days)</p>
 <section id="pie-container"></section>
@@ -534,6 +529,11 @@ gapi.analytics.ready(function() {
 <p></p>
 <p>Countries</p>
 <section id="country-container"></section>
+<p>
+<br>
+<textarea cols="30" rows="20" id="query-output"></textarea>
+<section id="auth-button"></section>
+<p></p>
 
 </body>
 
