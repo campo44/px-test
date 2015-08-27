@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Hello Analytics - A quickstart guide for JavaScript</title>
-  
-</head>
-<body>
-
-
-<button id="auth-button" hidden>Authorize</button>
-
-<div hidden>Hello Analytics</div>
+ /*
+  * This code queries the Core Reporting API and generates a text area of data
+  * showing the goal conversion rates of Create Account goal, and the city 
+  * where the person created it from
+ **/
 
 
 <script>
@@ -19,7 +11,7 @@
   var CLIENT_ID = '571689297980-ur9bp6ab1aqn4g4k7bm0tpapvm4kn15k.apps.googleusercontent.com';
 
  // Set authorized scope to your website 
-  var SCOPES = ['http://px300579.enjin.com'];
+  var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
 
 
   function authorize(event) {
@@ -129,13 +121,14 @@ function handleProfiles(response) {
 
 
 function queryCoreReportingApi(profileId) {
-  // Query the Core Reporting API for the number sessions for
-  // the past seven days.
+  // Query the Core Reporting API for goal conversion rate of goal 4 - Creating an account
+  // It spans the last 14 days and includes the city which the account creator originated from
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
-    'start-date': '7daysAgo',
+    'start-date': '14daysAgo',
     'end-date': 'today',
-    'metrics': 'ga:sessions'
+    'metrics': 'ga:goal4ConversionRate',
+    'dimensions': 'ga:city'
   })
   .then(function(response) {
     var formattedJson = JSON.stringify(response.result, null, 2);
@@ -148,11 +141,9 @@ function queryCoreReportingApi(profileId) {
 }
 
 
-
+  // Add an event listener to the 'auth-button'.
+  document.getElementById('auth-button').addEventListener('click', authorize);
 
 </script>
 
 <script src="https://apis.google.com/js/client.js?onload=authorize"></script>
-
-</body>
-</html>
