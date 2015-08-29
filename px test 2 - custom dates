@@ -42,7 +42,7 @@ gapi.analytics.ready(function() {
    */
   var dateRangePie = {
     'start-date': '7daysAgo',
-    'end-date': 'yesterday'
+    'end-date': 'today'
   };
 
 
@@ -137,7 +137,7 @@ var pageViewCustomChart = {
    */
   var dateRangePageView = {
     'start-date': '7daysAgo',
-    'end-date': 'yesterday'
+    'end-date': 'today'
   };
 
   /**
@@ -203,12 +203,17 @@ var pageViewCustomChart = {
 
 
 
+  /**
+   *  Creates a bar chart for goals completed, within a date range
+   */
+
+
 var goalBarChart = {
     query: {
       metrics: 'ga:goalCompletionsAll',
       dimensions: 'ga:pageTitle',
       'sort': '-ga:goalCompletionsAll',
-      'max-results': '5'
+      'max-results': '4'
     
     },
     chart: {
@@ -229,7 +234,7 @@ var goalBarChart = {
    */
   var dateRangeGoal = {
     'start-date': '14daysAgo',
-    'end-date': 'yesterday'
+    'end-date': 'today'
   };
 
   /**
