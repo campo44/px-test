@@ -4,7 +4,7 @@
 function insertGoal() {
   var request = gapi.client.analytics.management.goals.insert(
     {
-      'accountId': 'johnt94',
+      'accountId': '66119136',
       'webPropertyId': 'UA-66119136-1',
       'profileId': '106535442',
       'resource': {
