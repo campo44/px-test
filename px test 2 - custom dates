@@ -303,7 +303,101 @@ var goalBarChart = {
 
  
 
+
+
+ /**
+   *  Creates a table for SEO queries, within a chosen date range - landing page from keyword searches
+   */
+var seoTable = {
+    query: {
+      metrics: 'ga:sessions, ga:organicSearches, ga:goalConversionRateAll, ga:goalValuePerSession',
+      dimensions: 'ga:keyword, ga:landingPagePath'
+    },
+    chart: {
+      type: 'TABLE',
+      container: 'main-seo-table-container',
+     options: {
+        width: '100%',
+        
+      }
+    }
+  };
+  
+
+
+  /**
+   * Query params representing goal chart date range.
+   */
+  var dateRangeSeo = {
+    'start-date': '14daysAgo',
+    'end-date': 'today'
+  };
+
+  /**
+   * Create a new ViewSelector2 instance to be rendered inside of an
+   * element with the id "goal-view-selector".
+   */
+  var viewSelector4 = new gapi.analytics.ext.ViewSelector2({
+    container: 'seo-view-selector',
+  }).execute();
+
+
+  /**
+   * Create a new DateRangeSelector instance to be rendered inside of an
+   * element with the id "date-range-goal-container", set its date range
+   * and then render it to the page.
+   */
+  var dateRangeSelector4 = new gapi.analytics.ext.DateRangeSelector({
+    container: 'date-range-seo-container'
+  })
+  .set(dateRangeSeo).execute();
+
+
+
+  /**
+   * Create a new DataChart instance with the given query parameters
+   * and Google chart options. It will be rendered inside an element
+   * with the id "goal-chart-container-custom".
+   */
+  var seo = new gapi.analytics.googleCharts.DataChart(seoTable)
+     .set({query: dateRangeSeo})
+     .set({chart: {container: 'seo-table-container-custom'}});
+
+
+
+
+
+  /**
+   * Register a handler to run whenever the user changes the view.
+   * The handler will update both dataCharts as well as updating the title
+   * of the dashboard.
+   */
+  viewSelector4.on('viewChange', function(data) {
+    seo.set({query: {ids: data.ids}}).execute();
+
+
+    var title = document.getElementById('view-name');
+    title.innerHTML = data.property.name + ' (' + data.view.name + ')';
+  });
+
+
+  /**
+   * Register a handler to run whenever the user changes the date range from
+   * the first datepicker. The handler will update the first dataChart
+   * instance as well as change the dashboard subtitle to reflect the range.
+   */
+  dateRangeSelector4.on('change', function(data) {
+    seo.set({query: data}).execute();
+
+    // Update the "from" dates text.
+    var datefield = document.getElementById('from-dates');
+    datefield.innerHTML = data['start-date'] + '&mdash;' + data['end-date'];
+  });
+
 });
+    
+    
+    
     
     
 </script>
@@ -317,12 +411,11 @@ var goalBarChart = {
 </head>
 
 
-
-
 <body>
 
-
-
+<!--
+    pie chart containers
+-->
 <section id="pie-container-2-view-selector"></section>
 <br>
 <section id="main-pie-chart-container"></section>
@@ -331,7 +424,9 @@ var goalBarChart = {
 <br>
 <section id="pie-chart-container-custom"></section>
 <br>
-
+<!--
+    page view containers
+-->
 <section id="pageview-view-selector"></section>
 <br>
 <section id="main-pageview-chart-container"></section>
@@ -340,7 +435,9 @@ var goalBarChart = {
 <br>
 <section id="pageview-chart-container-custom"></section>
 <br>
-
+<!--
+    goals chart containers
+-->
 <section id="goal-view-selector"></section>
 <br>
 <section id="main-goal-chart-container"></section>
@@ -349,7 +446,17 @@ var goalBarChart = {
 <br>
 <section id="goal-chart-container-custom"></section>
 <br>
-
+<!--
+    SEO Query containers
+-->
+<section id="seo-view-selector"></section>
+<br>
+<section id="main-seo-table-container"></section>
+<br>
+<section id="date-range-seo-container"></section>
+<br>
+<section id="seo-table-container-custom"></section>
+<br>
 
 
 </body>
