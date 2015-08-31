@@ -3,270 +3,502 @@
 <head>
 
 
-<!--
-    First script in the head section containts the JavaScript code that displays the charts and graphs.
-    Second script in the head section contains the sample Core Reporting API and outputs results.
-    HTML containers are placed in the body to store each respective chart/graph.
--->
-
 
 <script src="https://ga-dev-tools.appspot.com/public/javascript/embed-api/components/view-selector2.js"></script>
 <script src="https://ga-dev-tools.appspot.com/public/javascript/embed-api/components/date-range-selector.js"></script>
 
 
-
-<!-- First script
-    The following code loads the Embed API library and generates the charts, graphs and tables
--->
-
-
 <script>
-    
-
-
-(function(w,d,s,g,js,fjs){
-  g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(cb){this.q.push(cb)}};
-  js=d.createElement(s);fjs=d.getElementsByTagName(s)[0];
-  js.src='https://apis.google.com/js/platform.js';
-  fjs.parentNode.insertBefore(js,fjs);js.onload=function(){g.load('analytics')};
-}(window,document,'script'));
-
 
 gapi.analytics.ready(function() {
 
-  // Step 1: Authorize the user.
-  // Enter client ID from your google developers console
-  var CLIENT_ID = '571689297980-ur9bp6ab1aqn4g4k7bm0tpapvm4kn15k.apps.googleusercontent.com';
 
-  gapi.analytics.auth.authorize({
-    container: 'auth-button',
-    clientid: CLIENT_ID,
-  });
 
-  // Step 2: Create the view selector.
 
-  var viewSelector = new gapi.analytics.ViewSelector({
-    container: 'view-selector'
-  });
-  
-  
-
-  // Step 3: Create the timeline chart.
-
-  var timeline = new gapi.analytics.googleCharts.DataChart({
-    reportType: 'ga',
-    query: {
-      'dimensions': 'ga:date',
-      'metrics': 'ga:sessions',
-      'start-date': '7daysAgo',
-      'end-date': 'yesterday',
-    },
-    chart: {
-      type: 'LINE',
-      container: 'timeline'
-      
-    }
-  });
-
-  // Step 4: Hook up the components to work together.
-
-  gapi.analytics.auth.on('success', function(response) {
-    viewSelector.execute();
-  });
-
-  viewSelector.on('change', function(ids) {
-    var newIds = {
-      query: {
-        ids: ids
-      }
-    }
-    timeline.set(newIds).execute();
-  });
-  
- /**
-   * Create a table chart showing top browsers for users to interact with.
-   * Clicking on a row in the table will update a second timeline chart with
-   * data from the selected browser.
-   */
+   /**
+   * Creates a pie chart to show new vs existing, customisable by entering chosen date ranges
+    */
    
-   
-    // Step 5: Create the chart variable
-    
-    
-  var mainChart = new gapi.analytics.googleCharts.DataChart({
-    query: {
-      'dimensions': 'ga:browser',
-      'metrics': 'ga:sessions',
-      'sort': '-ga:sessions',
-      'max-results': '6'
-    },
-    chart: {
-      type: 'TABLE',
-      container: 'main-chart-container',
-      options: {
-        width: '100%'
-      }
-    }
-  });
-
-
-  /**
-   * Create a timeline chart showing sessions over time for the browser the
-   * user selected in the main chart.
-   */
-  var breakdownChart = new gapi.analytics.googleCharts.DataChart({
-    query: {
-      'dimensions': 'ga:date',
-      'metrics': 'ga:sessions',
-      'start-date': '7daysAgo',
-      'end-date': 'yesterday'
-    },
-    chart: {
-      type: 'LINE',
-      container: 'breakdown-chart-container',
-      options: {
-        width: '100%'
-      }
-    }
-  });
-
-
-  /**
-   * Store a refernce to the row click listener variable so it can be
-   * removed later to prevent leaking memory when the chart instance is
-   * replaced.
-   */
-  var mainChartRowClickListener;
-
-
-  /**
-   * Update both charts whenever the selected view changes.
-   */
-  viewSelector.on('change', function(ids) {
-    var options = {query: {ids: ids}};
-
-    // Clean up any event listeners registered on the main chart before
-    // rendering a new one.
-    if (mainChartRowClickListener) {
-      google.visualization.events.removeListener(mainChartRowClickListener);
-    }
-
-    mainChart.set(options).execute();
-    breakdownChart.set(options);
-
-    // Only render the breakdown chart if a browser filter has been set.
-    if (breakdownChart.get().query.filters) breakdownChart.execute();
-  });
-
-
-  /**
-   * Each time the main chart is rendered, add an event listener to it so
-   * that when the user clicks on a row, the line chart is updated with
-   * the data from the browser in the clicked row.
-   */
-  mainChart.on('success', function(response) {
-
-    var chart = response.chart;
-    var dataTable = response.dataTable;
-
-    // Store a reference to this listener so it can be cleaned up later.
-    mainChartRowClickListener = google.visualization.events
-        .addListener(chart, 'select', function(event) {
-
-      // When you unselect a row, the "select" event still fires
-      // but the selection is empty. Ignore that case.
-      if (!chart.getSelection().length) return;
-
-      var row =  chart.getSelection()[0].row;
-      var browser =  dataTable.getValue(row, 0);
-      var options = {
-        query: {
-          filters: 'ga:browser==' + browser
-        },
-        chart: {
-          options: {
-            title: browser
-          }
-        }
-      };
-
-      breakdownChart.set(options).execute();
-    });
-  });
-  
-
- 
-
-
-  /**
-   * Create a new table to show keywords used in search engine, sorted by sessions".
-   */
-  var topContent = new gapi.analytics.googleCharts.DataChart({
-    query: {
-      metrics: 'ga:pageviews, ga:uniquePageviews, ga:timeOnPage, ga:bounces, ga:entrances, ga:exits',
-      dimensions: 'ga:pagePath',
-      sort: 'ga:pageviews'
-    },
-    chart: {
-      container: 'keyword-container',
-      type: 'TABLE',
-      options: {
-        width: '100%'
-      }
-    }
-  });
-  
-  /**
-   * Render the dataChart on the page whenever a new view is selected.
-   */
-  viewSelector.on('change', function(ids) {
-      var newIds = {
-      query: {
-        ids: ids
-      }
-    }
-    topContent.set(newIds).execute();
-  });
-
-/**
- * Bar chart that displays sessions by countries
- */
- 
-   var countries = new gapi.analytics.googleCharts.DataChart({
+  var pieChartCustomDate = {
     query: {
       metrics: 'ga:sessions',
-      dimensions: 'ga:country',
+      dimensions: 'ga:userType',
     },
     chart: {
-      container: 'country-container',
-      type: 'BAR',
+    container: 'main-pie-chart-container',
+      type: 'PIE',
       options: {
-        width: '100%'
+        width: '100%',
+        title: 'New vs Existing visitors',
       }
     }
-  });
+  };
   
+  
+
+
   /**
-   * Render the dataChart on the page whenever a new view is selected.
+   * Query params representing the first chart's date range.
    */
-  viewSelector.on('change', function(ids) {
-      var newIds = {
-      query: {
-        ids: ids
+  var dateRangePie = {
+    'start-date': '7daysAgo',
+    'end-date': 'today'
+  };
+
+
+
+  /**
+   * Create a new ViewSelector2 instance to be rendered inside of an
+   * element with the id "view-selector-container".
+   */
+  var viewSelector = new gapi.analytics.ext.ViewSelector2({
+    container: 'pie-container-2-view-selector',
+  }).execute();
+
+
+  /**
+   * Create a new DateRangeSelector instance to be rendered inside of an
+   * element with the id "date-range-selector-1-container", set its date range
+   * and then render it to the page.
+   */
+  var dateRangeSelector1 = new gapi.analytics.ext.DateRangeSelector({
+    container: 'date-range-pie-container'
+  })
+  .set(dateRangePie).execute();
+
+
+
+  /**
+   * Create a new DataChart instance with the given query parameters
+   * and Google chart options. It will be rendered inside an element
+   * with the id "pie-chart-container-custom".
+   */
+  var pieCustomChart1 = new gapi.analytics.googleCharts.DataChart(pieChartCustomDate)
+     .set({query: dateRangePie})
+     .set({chart: {container: 'pie-chart-container-custom'}});
+
+
+
+
+
+  /**
+   * Register a handler to run whenever the user changes the view.
+   * The handler will update both dataCharts as well as updating the title
+   * of the dashboard.
+   */
+  viewSelector.on('viewChange', function(data) {
+    pieCustomChart1.set({query: {ids: data.ids}}).execute();
+
+
+    var title = document.getElementById('view-name');
+    title.innerHTML = data.property.name + ' (' + data.view.name + ')';
+  });
+
+
+  /**
+   * Register a handler to run whenever the user changes the date range from
+   * the first datepicker. The handler will update the first dataChart
+   * instance as well as change the dashboard subtitle to reflect the range.
+   */
+  dateRangeSelector1.on('change', function(data) {
+    pieCustomChart1.set({query: data}).execute();
+
+    // Update the "from" dates text.
+    var datefield = document.getElementById('from-dates');
+    datefield.innerHTML = data['start-date'] + '&mdash;' + data['end-date'];
+  });
+
+
+
+
+  /**
+   *  Creates a bar chart to show page views, customisable by entering chosen date ranges
+   */
+var pageViewCustomChart = {
+    query: {
+      metrics: 'ga:pageviews',
+      dimensions: 'ga:date',
+    },
+    chart: {
+      type: 'COLUMN',
+      container: 'main-pageview-chart-container',
+      options: {
+        width: '100%',
+         title: 'Page views per day',
       }
     }
-    countries.set(newIds).execute();
-  }); 
-   
- 
+  };
+  
+  
+
+
+  /**
+   * Query params representing the first chart's date range.
+   */
+  var dateRangePageView = {
+    'start-date': '7daysAgo',
+    'end-date': 'today'
+  };
+
+  /**
+   * Create a new ViewSelector2 instance to be rendered inside of an
+   * element with the id "pageview-view-selector".
+   */
+  var viewSelector2 = new gapi.analytics.ext.ViewSelector2({
+    container: 'pageview-view-selector',
+  }).execute();
+
+
+  /**
+   * Create a new DateRangeSelector instance to be rendered inside of an
+   * element with the id "date-range-pageview-container", set its date range
+   * and then render it to the page.
+   */
+  var dateRangeSelector2 = new gapi.analytics.ext.DateRangeSelector({
+    container: 'date-range-pageview-container'
+  })
+  .set(dateRangePageView).execute();
+
+
+
+  /**
+   * Create a new DataChart instance with the given query parameters
+   * and Google chart options. It will be rendered inside an element
+   * with the id "pageview-chart-container-custom".
+   */
+  var pageView1 = new gapi.analytics.googleCharts.DataChart(pageViewCustomChart)
+     .set({query: dateRangePageView})
+     .set({chart: {container: 'pageview-chart-container-custom'}});
+
+
+
+
+
+  /**
+   * Register a handler to run whenever the user changes the view.
+   * The handler will update both dataCharts as well as updating the title
+   * of the dashboard.
+   */
+  viewSelector2.on('viewChange', function(data) {
+    pageView1.set({query: {ids: data.ids}}).execute();
+
+
+    var title = document.getElementById('view-name');
+    title.innerHTML = data.property.name + ' (' + data.view.name + ')';
+  });
+
+
+  /**
+   * Register a handler to run whenever the user changes the date range from
+   * the first datepicker. The handler will update the first dataChart
+   * instance as well as change the dashboard subtitle to reflect the range.
+   */
+  dateRangeSelector2.on('change', function(data) {
+    pageView1.set({query: data}).execute();
+
+    // Update the "from" dates text.
+    var datefield = document.getElementById('from-dates');
+    datefield.innerHTML = data['start-date'] + '&mdash;' + data['end-date'];
+  });
+
+
+
+
+
+  /**
+   *  Creates a bar chart for all goals completed, within a date range
+   */
+var goalBarChart = {
+    query: {
+      metrics: 'ga:goalCompletionsAll',
+      dimensions: 'ga:pageTitle',
+      'sort': '-ga:goalCompletionsAll',
+      'max-results': '4'
+    
+    },
+    chart: {
+      type: 'BAR',
+      container: 'main-goal-chart-container',
+     options: {
+        width: '100%',
+         title: 'Goals completed',
+         
+      }
+    }
+  };
+  
+
+
+  /**
+   * Query params representing goal chart date range.
+   */
+  var dateRangeGoal = {
+    'start-date': '14daysAgo',
+    'end-date': 'today'
+  };
+
+  /**
+   * Create a new ViewSelector2 instance to be rendered inside of an
+   * element with the id "goal-view-selector".
+   */
+  var viewSelector3 = new gapi.analytics.ext.ViewSelector2({
+    container: 'seo-view-selector',
+  }).execute();
+
+
+  /**
+   * Create a new DateRangeSelector instance to be rendered inside of an
+   * element with the id "date-range-goal-container", set its date range
+   * and then render it to the page.
+   */
+  var dateRangeSelector3 = new gapi.analytics.ext.DateRangeSelector({
+    container: 'date-range-goal-container'
+  })
+  .set(dateRangeGoal).execute();
+
+
+
+  /**
+   * Create a new DataChart instance with the given query parameters
+   * and Google chart options. It will be rendered inside an element
+   * with the id "goal-chart-container-custom".
+   */
+  var goal1 = new gapi.analytics.googleCharts.DataChart(goalBarChart)
+     .set({query: dateRangeGoal})
+     .set({chart: {container: 'goal-chart-container-custom'}});
+
+
+
+
+
+  /**
+   * Register a handler to run whenever the user changes the view.
+   * The handler will update both dataCharts as well as updating the title
+   * of the dashboard.
+   */
+  viewSelector3.on('viewChange', function(data) {
+    goal1.set({query: {ids: data.ids}}).execute();
+
+
+    var title = document.getElementById('view-name');
+    title.innerHTML = data.property.name + ' (' + data.view.name + ')';
+  });
+
+
+  /**
+   * Register a handler to run whenever the user changes the date range from
+   * the first datepicker. The handler will update the first dataChart
+   * instance as well as change the dashboard subtitle to reflect the range.
+   */
+  dateRangeSelector3.on('change', function(data) {
+    goal1.set({query: data}).execute();
+
+    // Update the "from" dates text.
+    var datefield = document.getElementById('from-dates');
+    datefield.innerHTML = data['start-date'] + '&mdash;' + data['end-date'];
+  });
+
+
+
+
+
+
+
+ /**
+   *  Creates a table for keywords, within a chosen date range - landing page and goal data
+   */
+var keywordTable = {
+    query: {
+      metrics: 'ga:sessions, ga:organicSearches, ga:goalConversionRateAll, ga:goalValuePerSession',
+      dimensions: 'ga:keyword, ga:landingPagePath'
+    },
+    chart: {
+      type: 'TABLE',
+      container: 'main-seo-table-container',
+     options: {
+        width: '100%',
+         title: 'Queries and their impressions, adclicks, click through rate',
+         
+      }
+    }
+  };
+  
+
+
+  /**
+   * Query params representing goal chart date range.
+   */
+  var dateRangeSeo = {
+    'start-date': '14daysAgo',
+    'end-date': 'today'
+  };
+
+  /**
+   * Create a new ViewSelector2 instance to be rendered inside of an
+   * element with the id "goal-view-selector".
+   */
+  var viewSelector4 = new gapi.analytics.ext.ViewSelector2({
+    container: 'seo-view-selector',
+  }).execute();
+
+
+  /**
+   * Create a new DateRangeSelector instance to be rendered inside of an
+   * element with the id "date-range-goal-container", set its date range
+   * and then render it to the page.
+   */
+  var dateRangeSelector4 = new gapi.analytics.ext.DateRangeSelector({
+    container: 'date-range-seo-container'
+  })
+  .set(dateRangeSeo).execute();
+
+
+
+  /**
+   * Create a new DataChart instance with the given query parameters
+   * and Google chart options. It will be rendered inside an element
+   * with the id "goal-chart-container-custom".
+   */
+  var seo = new gapi.analytics.googleCharts.DataChart(keywordTable)
+     .set({query: dateRangeSeo})
+     .set({chart: {container: 'seo-table-container-custom'}});
+
+
+
+
+
+  /**
+   * Register a handler to run whenever the user changes the view.
+   * The handler will update both dataCharts as well as updating the title
+   * of the dashboard.
+   */
+  viewSelector4.on('viewChange', function(data) {
+    seo.set({query: {ids: data.ids}}).execute();
+
+
+    var title = document.getElementById('view-name');
+    title.innerHTML = data.property.name + ' (' + data.view.name + ')';
+  });
+
+
+  /**
+   * Register a handler to run whenever the user changes the date range from
+   * the first datepicker. The handler will update the first dataChart
+   * instance as well as change the dashboard subtitle to reflect the range.
+   */
+  dateRangeSelector4.on('change', function(data) {
+    seo.set({query: data}).execute();
+
+    // Update the "from" dates text.
+    var datefield = document.getElementById('from-dates');
+    datefield.innerHTML = data['start-date'] + '&mdash;' + data['end-date'];
+  });
+
+
+
+
+ /**
+   *  Creates a table for keywords, within a chosen date range - landing page and goal data
+   */
+var landingTable = {
+    query: {
+      metrics: 'ga:adClicks',
+      dimensions: 'ga:keyword'
+    },
+    chart: {
+      type: 'TABLE',
+      container: 'main-landing-table-container',
+     options: {
+        width: '100%',
+         title: 'Queries and their impressions, adclicks, click through rate',
+         
+      }
+    }
+  };
+  
+
+
+  /**
+   * Query params representing goal chart date range.
+   */
+  var dateRangeLanding = {
+    'start-date': '14daysAgo',
+    'end-date': 'today'
+  };
+
+  /**
+   * Create a new ViewSelector2 instance to be rendered inside of an
+   * element with the id "goal-view-selector".
+   */
+  var viewSelector5 = new gapi.analytics.ext.ViewSelector2({
+    container: 'landing-view-selector',
+  }).execute();
+
+
+  /**
+   * Create a new DateRangeSelector instance to be rendered inside of an
+   * element with the id "date-range-goal-container", set its date range
+   * and then render it to the page.
+   */
+  var dateRangeSelector5 = new gapi.analytics.ext.DateRangeSelector({
+    container: 'date-range-landing-container'
+  })
+  .set(dateRangeLanding).execute();
+
+
+
+  /**
+   * Create a new DataChart instance with the given query parameters
+   * and Google chart options. It will be rendered inside an element
+   * with the id "goal-chart-container-custom".
+   */
+  var landing = new gapi.analytics.googleCharts.DataChart(landingTable)
+     .set({query: dateRangeLanding})
+     .set({chart: {container: 'landing-table-container-custom'}});
+
+
+
+
+
+  /**
+   * Register a handler to run whenever the user changes the view.
+   * The handler will update both dataCharts as well as updating the title
+   * of the dashboard.
+   */
+  viewSelector5.on('viewChange', function(data) {
+    landing.set({query: {ids: data.ids}}).execute();
+
+
+    var title = document.getElementById('view-name');
+    title.innerHTML = data.property.name + ' (' + data.view.name + ')';
+  });
+
+
+  /**
+   * Register a handler to run whenever the user changes the date range from
+   * the first datepicker. The handler will update the first dataChart
+   * instance as well as change the dashboard subtitle to reflect the range.
+   */
+  dateRangeSelector5.on('change', function(data) {
+    landing.set({query: data}).execute();
+
+    // Update the "from" dates text.
+    var datefield = document.getElementById('from-dates');
+    datefield.innerHTML = data['start-date'] + '&mdash;' + data['end-date'];
+  });
+
+
+
+
+
+
 });
-
-
-
+    
+    
+    
+    
+    
 </script>
-
-
-
 
 
 
@@ -277,59 +509,67 @@ gapi.analytics.ready(function() {
 </head>
 
 
-
-
-
-
-
-<!-- HTML Containers to hold the charts/graphs -->
 <body>
 
-<h1>PX Prototype</h1>
-<section id="auth-button"></section>
+<!--
+    pie chart containers
+-->
+<section id="pie-container-2-view-selector"></section>
 <br>
-<section id="view-selector"></section>
-<p></p>
-<p>Sessions per day (past 7 days)</p>
-<section id="timeline"></section>
-<p><br /> </p>
-<p>Browsers of users (past 7 days)</p>
-<section id="main-chart-container"></section>
-<section id="breakdown-chart-container"></section>
-<p></p>
-<h1>PX Test 2 AS</h1>
-
-<p></p>
-<p>New vs Returning users (past 30 days)</p>
-<section id="pie-container"></section>
-<p></p>
-<p>Top content</p>
-<section id="keyword-container"></section>
-<p></p>
-<p>Countries</p>
-<section id="country-container"></section>
-<p>
+<section id="main-pie-chart-container"></section>
 <br>
-
+<section id="date-range-pie-container"></section>
 <br>
-<div>
-<script>
-  (function() {
-    var cx = '007945618422662509104:d-ivgr1rxvg';
-    var gcse = document.createElement('script');
-    gcse.type = 'text/javascript';
-    gcse.async = true;
-    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-        '//cse.google.com/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
-  })();
-</script>
-<gcse:search></gcse:search>
-</div>
-<p></p>
+<section id="pie-chart-container-custom"></section>
+<br>
+<!--
+    page view containers
+-->
+<section id="pageview-view-selector"></section>
+<br>
+<section id="main-pageview-chart-container"></section>
+<br>
+<section id="date-range-pageview-container"></section>
+<br>
+<section id="pageview-chart-container-custom"></section>
+<br>
+<!--
+    goals chart containers
+-->
+<section id="goal-view-selector"></section>
+<br>
+<section id="main-goal-chart-container"></section>
+<br>
+<section id="date-range-goal-container"></section>
+<br>
+<section id="goal-chart-container-custom"></section>
+<br>
+<!--
+    SEO Query containers
+-->
+<section id="seo-view-selector"></section>
+<br>
+<section id="main-seo-table-container"></section>
+<br>
+<section id="date-range-seo-container"></section>
+<br>
+<section id="seo-table-container-custom"></section>
+<br>
+<!--
+    landing page data containers
+-->
+<section id="landing-view-selector"></section>
+<br>
+<section id="main-landing-table-container"></section>
+<br>
+<section id="date-range-landing-container"></section>
+<br>
+<section id="landing-table-container-custom"></section>
+<br>
 
 </body>
 
 
 </html>
+
+
