@@ -1,9 +1,9 @@
-This repository contains the code for the testing done on http://px300579.enjin.com/<br>
-All HTML and JavaScript code has now been combined into one file (PX-Test 1) as the code editor does accept both types of code in the same editor despite recommendations to separate it into their respective module editors.
+This repository contains the code for the testing done on http://px300579.enjin.com/
+<br>
 
 
 <ul>
-<li>PX-Test 1 contains the majority of the code, to display and retrieve Google Analytics data such as graphs, and tables, and the OAUTH authorization code. This page now combines all HTML containers and JavaScript on the same page.</li>
+<li>PX-Test 1 contains the initial code to display and retrieve Google Analytics for stock graphs and tables, the OAUTH authorization code, and internal site search code.</li>
 <br>
 <li>PX test 2 - custom dates provides the code for the Charts with date ranges using the custom date range selector from GA API </li>
 <br>
