@@ -305,7 +305,9 @@ var goalBarChart = {
 
 
  /**
-   *  Creates a table for keywords, within a chosen date range - landing page and goal data
+   *  Creates a table for organic keyword searches and their landing path, within a chosen date range
+   * Also outputs metrics such as goal conversion rate in %, and goal value per session $
+   * 
    */
 var keywordTable = {
     query: {
