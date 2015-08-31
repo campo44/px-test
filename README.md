@@ -4,9 +4,14 @@ All HTML and JavaScript code has now been combined into one file (PX-Test 1) as 
 
 <ul>
 <li>PX-Test 1 contains the majority of the code, to display and retrieve Google Analytics data such as graphs, and tables, and the OAUTH authorization code. This page now combines all HTML containers and JavaScript on the same page.</li>
+<br>
 <li>PX test 2 - custom dates provides the code for the Charts with date ranges using the custom date range selector from GA API </li>
+<br>
 <li>Goal completion count - JSON format provides the code to output total goal completion count for each goal and total amount of goals completed. Presented in JSON </li>
+<br>
 <li>Goal  conversion rate - JSON format provides the code to output goal conversion rate for each goal. Presented in JSON </li>
+<br>
 <li>createGoal stores the code that inserts a goal and its properties from a website </li>
+<br>
 <li>Analytics tracking code is the code needed to enable tracking of the website from GA. This is code inserted into every 'head' tag of the test site and lies in a separate coding editor. </li>
 </ul>
