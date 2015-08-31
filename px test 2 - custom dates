@@ -211,7 +211,7 @@ var pageViewCustomChart = {
 var goalBarChart = {
     query: {
       metrics: 'ga:goalCompletionsAll',
-      dimensions: 'ga:pageTitle',
+      dimensions: 'ga:landingPagePath',
       'sort': '-ga:goalCompletionsAll',
       'max-results': '4'
     
