@@ -109,11 +109,11 @@ gapi.analytics.ready(function() {
   });
 
 
+
+
   /**
    *  Creates a bar chart to show page views, customisable by entering chosen date ranges
    */
-
-
 var pageViewCustomChart = {
     query: {
       metrics: 'ga:pageviews',
@@ -203,11 +203,11 @@ var pageViewCustomChart = {
 
 
 
+
+
   /**
-   *  Creates a bar chart for goals completed, within a date range
+   *  Creates a bar chart for all goals completed, within a date range
    */
-
-
 var goalBarChart = {
     query: {
       metrics: 'ga:goalCompletionsAll',
@@ -230,7 +230,7 @@ var goalBarChart = {
 
 
   /**
-   * Query params representing the first chart's date range.
+   * Query params representing goal chart date range.
    */
   var dateRangeGoal = {
     'start-date': '14daysAgo',
@@ -239,16 +239,16 @@ var goalBarChart = {
 
   /**
    * Create a new ViewSelector2 instance to be rendered inside of an
-   * element with the id "pageview-view-selector".
+   * element with the id "goal-view-selector".
    */
   var viewSelector3 = new gapi.analytics.ext.ViewSelector2({
-    container: 'goal-view-selector',
+    container: 'seo-view-selector',
   }).execute();
 
 
   /**
    * Create a new DateRangeSelector instance to be rendered inside of an
-   * element with the id "date-range-pageview-container", set its date range
+   * element with the id "date-range-goal-container", set its date range
    * and then render it to the page.
    */
   var dateRangeSelector3 = new gapi.analytics.ext.DateRangeSelector({
@@ -261,7 +261,7 @@ var goalBarChart = {
   /**
    * Create a new DataChart instance with the given query parameters
    * and Google chart options. It will be rendered inside an element
-   * with the id "pageview-chart-container-custom".
+   * with the id "goal-chart-container-custom".
    */
   var goal1 = new gapi.analytics.googleCharts.DataChart(goalBarChart)
      .set({query: dateRangeGoal})
@@ -301,14 +301,13 @@ var goalBarChart = {
 
 
 
- 
 
 
 
  /**
-   *  Creates a table for SEO queries, within a chosen date range - landing page from keyword searches
+   *  Creates a table for keywords, within a chosen date range - landing page and goal data
    */
-var seoTable = {
+var keywordTable = {
     query: {
       metrics: 'ga:sessions, ga:organicSearches, ga:goalConversionRateAll, ga:goalValuePerSession',
       dimensions: 'ga:keyword, ga:landingPagePath'
@@ -318,7 +317,8 @@ var seoTable = {
       container: 'main-seo-table-container',
      options: {
         width: '100%',
-        
+         title: 'Queries and their impressions, adclicks, click through rate',
+         
       }
     }
   };
@@ -359,7 +359,7 @@ var seoTable = {
    * and Google chart options. It will be rendered inside an element
    * with the id "goal-chart-container-custom".
    */
-  var seo = new gapi.analytics.googleCharts.DataChart(seoTable)
+  var seo = new gapi.analytics.googleCharts.DataChart(keywordTable)
      .set({query: dateRangeSeo})
      .set({chart: {container: 'seo-table-container-custom'}});
 
@@ -394,19 +394,104 @@ var seoTable = {
     datefield.innerHTML = data['start-date'] + '&mdash;' + data['end-date'];
   });
 
+
+
+
+ /**
+   *  Table to show keywords  and their clicks - Does not generate (invalid metric and dimensions)
+   */
+var landingTable = {
+    query: {
+      metrics: 'ga:adClicks',
+      dimensions: 'ga:keyword'
+    },
+    chart: {
+      type: 'TABLE',
+      container: 'main-landing-table-container',
+     options: {
+        width: '100%',
+      }
+    }
+  };
+  
+
+
+  /**
+   * Query params representing goal chart date range.
+   */
+  var dateRangeLanding = {
+    'start-date': '14daysAgo',
+    'end-date': 'today'
+  };
+
+  /**
+   * Create a new ViewSelector2 instance to be rendered inside of an
+   * element with the id "goal-view-selector".
+   */
+  var viewSelector5 = new gapi.analytics.ext.ViewSelector2({
+    container: 'landing-view-selector',
+  }).execute();
+
+
+  /**
+   * Create a new DateRangeSelector instance to be rendered inside of an
+   * element with the id "date-range-goal-container", set its date range
+   * and then render it to the page.
+   */
+  var dateRangeSelector5 = new gapi.analytics.ext.DateRangeSelector({
+    container: 'date-range-landing-container'
+  })
+  .set(dateRangeLanding).execute();
+
+
+
+  /**
+   * Create a new DataChart instance with the given query parameters
+   * and Google chart options. It will be rendered inside an element
+   * with the id "goal-chart-container-custom".
+   */
+  var landing = new gapi.analytics.googleCharts.DataChart(landingTable)
+     .set({query: dateRangeLanding})
+     .set({chart: {container: 'landing-table-container-custom'}});
+
+
+
+
+
+  /**
+   * Register a handler to run whenever the user changes the view.
+   * The handler will update both dataCharts as well as updating the title
+   * of the dashboard.
+   */
+  viewSelector5.on('viewChange', function(data) {
+    landing.set({query: {ids: data.ids}}).execute();
+
+
+    var title = document.getElementById('view-name');
+    title.innerHTML = data.property.name + ' (' + data.view.name + ')';
+  });
+
+
+  /**
+   * Register a handler to run whenever the user changes the date range from
+   * the first datepicker. The handler will update the first dataChart
+   * instance as well as change the dashboard subtitle to reflect the range.
+   */
+  dateRangeSelector5.on('change', function(data) {
+    landing.set({query: data}).execute();
+
+    // Update the "from" dates text.
+    var datefield = document.getElementById('from-dates');
+    datefield.innerHTML = data['start-date'] + '&mdash;' + data['end-date'];
+  });
+
+
+
 });
     
     
     
-    
-    
 </script>
-
-
-
-
-
-
 
 </head>
 
@@ -457,7 +542,17 @@ var seoTable = {
 <br>
 <section id="seo-table-container-custom"></section>
 <br>
-
+<!--
+    landing page data containers
+-->
+<section id="landing-view-selector"></section>
+<br>
+<section id="main-landing-table-container"></section>
+<br>
+<section id="date-range-landing-container"></section>
+<br>
+<section id="landing-table-container-custom"></section>
+<br>
 
 </body>
 
