@@ -398,7 +398,7 @@ var keywordTable = {
 
 
  /**
-   *  Table to show keywords  and their clicks - Does not generate (invalid metric and dimensions)
+   *  Table to show keywords  and their clicks - for paid ads (Adwords)
    */
 var landingTable = {
     query: {
@@ -488,10 +488,16 @@ var landingTable = {
 
 
 });
+
+
+
     
     
     
 </script>
+
+
+
 
 </head>
 
