@@ -1,7 +1,6 @@
 <!-- 
     This code queries the Core Reporting API and generates a text area of data
-    showing the goal conversion rates of Create Account goal, and the city 
-    where the person created it from
+    showing the page view numbers for each date for the last 14 days
 -->
  
   
