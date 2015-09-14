@@ -397,10 +397,10 @@ var keywordTable = {
 
 
 
- /**
+  /**
    *  Table to show keywords  and their clicks - for paid ads (Adwords)
    */
-var landingTable = {
+var adClicks = {
     query: {
       metrics: 'ga:adClicks',
       dimensions: 'ga:keyword'
@@ -419,7 +419,7 @@ var landingTable = {
   /**
    * Query params representing goal chart date range.
    */
-  var dateRangeLanding = {
+  var dateRangeClicks = {
     'start-date': '14daysAgo',
     'end-date': 'today'
   };
@@ -441,7 +441,7 @@ var landingTable = {
   var dateRangeSelector5 = new gapi.analytics.ext.DateRangeSelector({
     container: 'date-range-landing-container'
   })
-  .set(dateRangeLanding).execute();
+  .set(dateRangeClicks).execute();
 
 
 
@@ -450,8 +450,8 @@ var landingTable = {
    * and Google chart options. It will be rendered inside an element
    * with the id "goal-chart-container-custom".
    */
-  var landing = new gapi.analytics.googleCharts.DataChart(landingTable)
-     .set({query: dateRangeLanding})
+  var clicks = new gapi.analytics.googleCharts.DataChart(adClicks)
+     .set({query: dateRangeClicks})
      .set({chart: {container: 'landing-table-container-custom'}});
 
 
@@ -464,7 +464,7 @@ var landingTable = {
    * of the dashboard.
    */
   viewSelector5.on('viewChange', function(data) {
-    landing.set({query: {ids: data.ids}}).execute();
+    clicks.set({query: {ids: data.ids}}).execute();
 
 
     var title = document.getElementById('view-name');
@@ -478,7 +478,7 @@ var landingTable = {
    * instance as well as change the dashboard subtitle to reflect the range.
    */
   dateRangeSelector5.on('change', function(data) {
-    landing.set({query: data}).execute();
+    clicks.set({query: data}).execute();
 
     // Update the "from" dates text.
     var datefield = document.getElementById('from-dates');
