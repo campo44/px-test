@@ -1,22 +1,53 @@
-/*
- * This request creates a new goal.
- */
-function insertGoal() {
+<br>
+<script>
+
+/**
+ *
+ * Code for inserting a goal. 
+ * (This code does not execute)
+*/
+
+ 
+ function insertGoal() {
   var request = gapi.client.analytics.management.goals.insert(
-    {
-      'accountId': '66119136',
-      'webPropertyId': 'UA-66119136-1',
-      'profileId': '106535442',
+   {
+    'accountId': '66119136',
+    'webPropertyId': 'UA-106535442-1',
+    'profileId': '106535442',
       'resource': {
-        'id': '7',
-        'active': false,
-        'name': 'user time on site',
-        'type': 'VISIT_TIME_ON_SITE',
-        'visitTimeOnSiteDetails': {
-          'comparisonType': 'GREATER_THAN',
-          'comparisonValue': 300
-        }
-      }
-    });
-  request.execute(function (response) { // Handle the response. });
+    'id': '6',
+    'kind': 'analytics#goal',
+    'selfLink': 'https://www.googleapis.com/analytics/v3/management/accounts/66119136/webproperties/UA-66119136-1/profiles/106535442/goals/6',
+    'accountId': '66119136',
+    'webPropertyId': 'UA-66119136-1',
+    'internalWebPropertyId': '102504912',
+    'profileId': '106535442',
+    'name': 'Gallery',
+    'value': 2,
+    'active': true,
+    'type': 'URL_DESTINATION',
+    'parentLink': {
+    'type': 'analytics#profile',
+    'href': 'https://www.googleapis.com/analytics/v3/management/accounts/66119136/webproperties/UA-66119136-1/profiles/106535442',
+    },
+    'urlDestinationDetails': {
+    'url': 'http://px300579.enjin.com/gallery',
+    'caseSensitive': false,
+    'matchType': 'EXACT',
+    'firstStepRequired': false,
+    },
+  }
+     
+   
+});
+  request.execute(function (response) {  
+
+      
+  });
+  
 }
+</script>
+
+<br>
+
+
