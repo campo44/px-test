@@ -120,19 +120,19 @@ function handleProfiles(response) {
 }
 
 
-function queryCoreReportingApi(profileId) {
-  // Query the Core Reporting API for goal conversion rate of goal 4 - Creating an account
+function queryGoalConversionRate(profileId) {
+  // Query the Core Reporting API for goal conversion rate for all goals
   // It spans the last 14 days and includes the city which the account creator originated from
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
     'start-date': '14daysAgo',
     'end-date': 'today',
-    'metrics': 'ga:goal4ConversionRate',
+    'metrics': 'ga:goalConversionRateAll',
     'dimensions': 'ga:city'
   })
   .then(function(response) {
-    var formattedJson = JSON.stringify(response.result, null, 2);
-    document.getElementById('query-output').value = formattedJson;
+    var formattedJson4 = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-output4').value = formattedJson4;
   })
   .then(null, function(err) {
       // Log any errors.
