@@ -112,7 +112,7 @@ function handleProfiles(response) {
     var firstProfileId = response.result.items[0].id;
 
     // Query the Core Reporting API.
-    queryCoreReportingApi(firstProfileId);
+    queryPageViews(firstProfileId);
   } else {
     console.log('No views (profiles) found for this user.');
   }
@@ -150,7 +150,7 @@ function queryPageViews(profileId) {
 
 
 
-<textarea cols="90" rows="30" id="query-output"></textarea>
+<textarea cols="90" rows="30" id="query-output2"></textarea>
 
 <br>
 <br>
