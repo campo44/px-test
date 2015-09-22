@@ -119,10 +119,9 @@ function handleProfiles(response) {
 }
 
 
-function queryCoreReportingApi(profileId) {
+function queryPageViews(profileId) {
   // Query the Core Reporting API for page view counts for each day - last 14 days
-  
-    gapi.client.analytics.data.ga.get({
+  gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
     'start-date': '14daysAgo',
     'end-date': 'today',
@@ -130,8 +129,8 @@ function queryCoreReportingApi(profileId) {
     'dimensions': 'ga:date'
   })
   .then(function(response) {
-    var formattedJson = JSON.stringify(response.result, null, 2);
-    document.getElementById('query-output').value = formattedJson;
+    var formattedJson2 = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-output2').value = formattedJson2;
   })
   .then(null, function(err) {
       // Log any errors.
