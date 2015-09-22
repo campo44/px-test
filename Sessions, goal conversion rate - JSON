@@ -113,14 +113,14 @@ function handleProfiles(response) {
     var firstProfileId = response.result.items[0].id;
 
     // Query the Core Reporting API.
-    queryCoreReportingApi(firstProfileId);
+    queryLandingValue(firstProfileId);
   } else {
     console.log('No views (profiles) found for this user.');
   }
 }
 
 
-function queryCoreReportingApi(profileId) {
+function queryLandingValue(profileId) {
   // Query the Core Reporting API for sessions, goal conversion rate, per session goal value 
   // for certain keywords and their landing page path.
   gapi.client.analytics.data.ga.get({
@@ -131,8 +131,8 @@ function queryCoreReportingApi(profileId) {
     'dimensions': 'ga:keyword, ga:landingPagePath'
   })
   .then(function(response) {
-    var formattedJson = JSON.stringify(response.result, null, 2);
-    document.getElementById('query-output').value = formattedJson;
+    var formattedJson3 = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-output3').value = formattedJson3;
   })
   .then(null, function(err) {
       // Log any errors.
@@ -152,7 +152,7 @@ function queryCoreReportingApi(profileId) {
 
 
 
-<textarea cols="90" rows="30" id="query-output"></textarea>
+<textarea cols="90" rows="30" id="query-output3"></textarea>
 
 <br>
 <br>
