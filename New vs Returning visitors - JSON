@@ -21,7 +21,7 @@ function loadLib() {
   var CLIENT_ID = '571689297980-ur9bp6ab1aqn4g4k7bm0tpapvm4kn15k.apps.googleusercontent.com';
 
  // Set authorized scope to analytics
-  var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
+  var SCOPES = ['https://www.googleapis.com/auth/analytics.edit'];
 
 
   function authorize(event) {
