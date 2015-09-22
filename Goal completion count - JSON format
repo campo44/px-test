@@ -123,14 +123,14 @@ function handleProfiles(response) {
     var firstProfileId = response.result.items[0].id;
 
     // Query the Core Reporting API.
-    queryCoreReportingApi(firstProfileId);
+    queryGoalCompletions(firstProfileId);
   } else {
     console.log('No views (profiles) found for this user.');
   }
 }
 
 
-function queryCoreReportingApi(profileId) {
+function queryGoalCompletions(profileId) {
   // Query the Core Reporting API for goal total goal completion (4 goals)
   // Shows the list of goals and the completion count for each respective goal
   gapi.client.analytics.data.ga.get({
