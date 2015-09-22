@@ -158,4 +158,4 @@ function queryNewOrExisting(profileId) {
 
 <script src="https://apis.google.com/js/client.js?onload=authorize"></script>
 
-<textarea cols="90" rows="30" id="query-output"></textarea>
+<textarea cols="90" rows="30" id="query-output1"></textarea>
