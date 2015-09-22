@@ -11,7 +11,7 @@
   var CLIENT_ID = '571689297980-ur9bp6ab1aqn4g4k7bm0tpapvm4kn15k.apps.googleusercontent.com';
 
  // Set authorized scope to your website 
-  var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
+  var SCOPES = ['https://www.googleapis.com/auth/analytics.edit'];
 
 
   function authorize(event) {
@@ -113,7 +113,7 @@ function handleProfiles(response) {
     var firstProfileId = response.result.items[0].id;
 
     // Query the Core Reporting API.
-    queryCoreReportingApi(firstProfileId);
+    queryGoalConversionRate(firstProfileId);
   } else {
     console.log('No views (profiles) found for this user.');
   }
@@ -147,3 +147,6 @@ function queryGoalConversionRate(profileId) {
 </script>
 
 <script src="https://apis.google.com/js/client.js?onload=authorize"></script>
+
+<textarea cols="90" rows="30" id="query-output4"></textarea>
+
