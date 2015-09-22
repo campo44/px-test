@@ -130,7 +130,7 @@ function handleProfiles(response) {
 }
 
 
-function queryCoreReportingApi(profileId) {
+function queryNewOrExisting(profileId) {
   // Query the Core Reporting API for new vs returning visitors
   // Shows how many new visitors came to site, and existing visitors for last 14 days
   gapi.client.analytics.data.ga.get({
@@ -141,8 +141,8 @@ function queryCoreReportingApi(profileId) {
     'dimensions': 'ga:userType'
   })
   .then(function(response) {
-    var formattedJson = JSON.stringify(response.result, null, 2);
-    document.getElementById('query-output').value = formattedJson;
+    var formattedJson1 = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-output1').value = formattedJson1;
   })
   .then(null, function(err) {
       // Log any errors.
