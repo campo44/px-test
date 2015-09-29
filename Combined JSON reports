@@ -142,6 +142,7 @@ function handleProfiles(response) {
     queryPageViews(firstProfileId);
     queryLandingValue(firstProfileId);
     queryGoalConversionRate(firstProfileId);
+    queryAdQueries(firstProfileId);
   } else {
     console.log('No views (profiles) found for this user.');
   }
@@ -153,10 +154,10 @@ function queryGoalCompletions(profileId) {
   // Shows the list of goals and the completion count for each respective goal and their URL
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
-    'start-date': '14daysAgo',
+    'start-date': '18daysAgo',
     'end-date': 'today',
     'metrics': 'ga:goalCompletionsAll',
-    'dimensions': 'ga:goalCompletionLocation'
+    'dimensions': 'ga:date, ga:hour, ga:minute'
   })
   .then(function(response) {
     var formattedJson = JSON.stringify(response.result, null, 2);
@@ -251,6 +252,27 @@ function queryGoalConversionRate(profileId) {
   });
 }
 
+
+function queryAdQueries(profileId) {
+  // Query the Core Reporting API for goal conversion rate for all goals
+  // It spans the last 14 days and includes the city which the account creator originated from
+  gapi.client.analytics.data.ga.get({
+    'ids': 'ga:' + profileId,
+    'start-date': '30daysAgo',
+    'end-date': 'today',
+    'metrics': 'ga:impressions, ga:adClicks, ga:CTR',
+    'dimensions': 'ga:adMatchedQuery'
+  })
+  .then(function(response) {
+    var formattedJson5 = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-output5').value = formattedJson5;
+  })
+  .then(null, function(err) {
+      // Log any errors.
+      console.log(err);
+  });
+}
+
   // Add an event listener to the 'auth-button'.
   document.getElementById('auth-button').addEventListener('click', authorize);
 
@@ -278,7 +300,9 @@ function queryGoalConversionRate(profileId) {
 <p>Goal Conversion rate</p>
 <textarea cols="90" rows="30" id="query-output4"></textarea> <br> <br>
 <br>
-    
+<p>Ad queries, impressions, clicks, CTR</p>
+<textarea cols="90" rows="30" id="query-output5"></textarea> <br> <br>
+<br>
 <section id="auth-button"></section>
 
 
