@@ -397,7 +397,7 @@ var keywordTable = {
 
 
 
-  /**
+ /**
    *  Table to show keywords  and their clicks - for paid ads (Adwords)
    */
 var adClicks = {
@@ -486,6 +486,95 @@ var adClicks = {
   });
 
 
+/**
+   *  Table to show keywords  and their clicks - for paid ads (Adwords)
+   */
+var adQueries = {
+    query: {
+      metrics: 'ga:impressions, ga:adClicks, ga:CTR',
+      dimensions: 'ga:adMatchedQuery'
+    },
+    chart: {
+      type: 'TABLE',
+      container: 'main-queries-table-container',
+     options: {
+        width: '100%',
+      }
+    }
+  };
+  
+
+
+  /**
+   * Query params representing goal chart date range.
+   */
+  var dateRangeQueries = {
+    'start-date': '14daysAgo',
+    'end-date': 'today'
+  };
+
+  /**
+   * Create a new ViewSelector2 instance to be rendered inside of an
+   * element with the id "goal-view-selector".
+   */
+  var viewSelector6 = new gapi.analytics.ext.ViewSelector2({
+    container: 'query-view-selector',
+  }).execute();
+
+
+  /**
+   * Create a new DateRangeSelector instance to be rendered inside of an
+   * element with the id "date-range-goal-container", set its date range
+   * and then render it to the page.
+   */
+  var dateRangeSelector6 = new gapi.analytics.ext.DateRangeSelector({
+    container: 'date-range-query-container'
+  })
+  .set(dateRangeQueries).execute();
+
+
+
+  /**
+   * Create a new DataChart instance with the given query parameters
+   * and Google chart options. It will be rendered inside an element
+   * with the id "goal-chart-container-custom".
+   */
+  var queries = new gapi.analytics.googleCharts.DataChart(adQueries)
+     .set({query: dateRangeQueries})
+     .set({chart: {container: 'query-table-container-custom'}});
+
+
+
+
+
+  /**
+   * Register a handler to run whenever the user changes the view.
+   * The handler will update both dataCharts as well as updating the title
+   * of the dashboard.
+   */
+  viewSelector6.on('viewChange', function(data) {
+    queries.set({query: {ids: data.ids}}).execute();
+
+
+    var title = document.getElementById('view-name');
+    title.innerHTML = data.property.name + ' (' + data.view.name + ')';
+  });
+
+
+  /**
+   * Register a handler to run whenever the user changes the date range from
+   * the first datepicker. The handler will update the first dataChart
+   * instance as well as change the dashboard subtitle to reflect the range.
+   */
+  dateRangeSelector6.on('change', function(data) {
+    queries.set({query: data}).execute();
+
+    // Update the "from" dates text.
+    var datefield = document.getElementById('from-dates');
+    datefield.innerHTML = data['start-date'] + '&mdash;' + data['end-date'];
+  });
+
+
 
 });
 
@@ -493,14 +582,9 @@ var adClicks = {
 
     
     
-    
 </script>
 
-
-
-
 </head>
-
 
 <body>
 
@@ -560,8 +644,19 @@ var adClicks = {
 <section id="landing-table-container-custom"></section>
 <br>
 
-</body>
+<!--
+    query data containers
+-->
 
+<section id="query-view-selector"></section>
+<br>
+<section id="main-queries-table-container"></section>
+<br>
+<section id="date-range-query-container"></section>
+<br>
+<section id="query-table-container-custom"></section>
+<br>
+</body>
 
 </html>
 
