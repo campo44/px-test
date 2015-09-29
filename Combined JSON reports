@@ -254,8 +254,8 @@ function queryGoalConversionRate(profileId) {
 
 
 function queryAdQueries(profileId) {
-  // Query the Core Reporting API for goal conversion rate for all goals
-  // It spans the last 14 days and includes the city which the account creator originated from
+  // Query the Core Reporting API for queries and their impressions, clicks, CTR
+  // It spans the last 30 days
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
     'start-date': '30daysAgo',
