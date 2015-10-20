@@ -122,13 +122,13 @@ function handleProfiles(response) {
 
 function queryLandingValue(profileId) {
   // Query the Core Reporting API for sessions, goal conversion rate, per session goal value 
-  // for certain keywords and their landing page path.
+  // for their landing page path.
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
     'start-date': '14daysAgo',
     'end-date': 'today',
     'metrics': 'ga:sessions, ga:organicSearches, ga:goalConversionRateAll, ga:goalValuePerSession',
-    'dimensions': 'ga:keyword, ga:landingPagePath'
+    'dimensions': 'ga:landingPagePath'
   })
   .then(function(response) {
     var formattedJson3 = JSON.stringify(response.result, null, 2);
