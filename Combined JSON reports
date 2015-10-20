@@ -286,22 +286,22 @@ function queryAdQueries(profileId) {
 
 
 <p>Goal completion count</p>
-<textarea cols="90" rows="30" id="query-output"></textarea> <br> <br>
+<textarea readonly cols="90" rows="30" id="query-output"></textarea> <br> <br>
 
 <p>New vs Existing Visitor</p>
-<textarea cols="90" rows="30" id="query-output1"></textarea> <br> <br>
+<textarea readonly cols="90" rows="30" id="query-output1"></textarea> <br> <br>
 <br>
 <p>Page views</p>
-<textarea cols="90" rows="30" id="query-output2"></textarea> <br> <br>
+<textarea readonly cols="90" rows="30" id="query-output2"></textarea> <br> <br>
 <br>
 <p>Goal Conversion rate, per session goal value for Landing Page</p>
-<textarea cols="90" rows="30" id="query-output3"></textarea> <br> <br>
+<textarea readonly cols="90" rows="30" id="query-output3"></textarea> <br> <br>
 <br>
 <p>Goal Conversion rate</p>
-<textarea cols="90" rows="30" id="query-output4"></textarea> <br> <br>
+<textarea readonly cols="90" rows="30" id="query-output4"></textarea> <br> <br>
 <br>
 <p>Ad queries, impressions, clicks, CTR</p>
-<textarea cols="90" rows="30" id="query-output5"></textarea> <br> <br>
+<textarea readonly cols="90" rows="30" id="query-output5"></textarea> <br> <br>
 <br>
 <section id="auth-button"></section>
 
