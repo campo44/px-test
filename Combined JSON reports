@@ -24,7 +24,7 @@ function loadLib() {
   // Replace with your client ID from google developers console.
   var CLIENT_ID = '571689297980-ur9bp6ab1aqn4g4k7bm0tpapvm4kn15k.apps.googleusercontent.com';
 
- // Set authorized scope to readonly(viewing), edit (management API writes), analytics (general)
+ // Set authorized scope to readonly(viewing), edit (management API edit), analytics (management API writes)
   var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly', 'https://www.googleapis.com/auth/analytics.edit', 'https://www.googleapis.com/auth/analytics'];
 
 
