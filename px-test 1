@@ -4,15 +4,11 @@
 
 
 <!--
-    First script in the head section containts the JavaScript code that displays the charts and graphs.
-    Second script in the head section contains the sample Core Reporting API and outputs results.
-    HTML containers are placed in the body to store each respective chart/graph.
+Place the code in this file on top, then PX Test 2 Main Charts & Tables
 -->
-
 
 <script src="https://ga-dev-tools.appspot.com/public/javascript/embed-api/components/view-selector2.js"></script>
 <script src="https://ga-dev-tools.appspot.com/public/javascript/embed-api/components/date-range-selector.js"></script>
-
 
 
 <!-- First script
@@ -22,8 +18,6 @@
 
 <script>
     
-
-
 (function(w,d,s,g,js,fjs){
   g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(cb){this.q.push(cb)}};
   js=d.createElement(s);fjs=d.getElementsByTagName(s)[0];
@@ -50,14 +44,13 @@ gapi.analytics.ready(function() {
   });
   
   
-
   // Step 3: Create the timeline chart. Shows sessions (visits) per day
 
   var timeline = new gapi.analytics.googleCharts.DataChart({
     reportType: 'ga',
     query: {
       'dimensions': 'ga:date',
-      'metrics': 'ga:sessions',
+      'metrics': 'ga:sessions, ga:pageviews',
       'start-date': '7daysAgo',
       'end-date': 'today',
     },
@@ -71,7 +64,7 @@ gapi.analytics.ready(function() {
     }
   });
 
-  // Step 4: Hook up the components to work together.
+   // Step 4: Hook up the components to work together.
 
   gapi.analytics.auth.on('success', function(response) {
     viewSelector.execute();
@@ -86,74 +79,6 @@ gapi.analytics.ready(function() {
     timeline.set(newIds).execute();
   });
   
-
-   
- 
-
-  /**
-   * Create a new table to show most popular pages.
-   */
-  var topContent = new gapi.analytics.googleCharts.DataChart({
-    query: {
-      metrics: 'ga:pageviews, ga:uniquePageviews, ga:timeOnPage, ga:bounces, ga:entrances, ga:exits',
-      dimensions: 'ga:pagePath',
-      sort: 'ga:pageviews'
-    },
-    chart: {
-      container: 'keyword-container',
-      type: 'TABLE',
-      options: {
-        width: '100%',
-        title: 'Top content',
-      }
-    }
-  });
-  
-  /**
-   * Render the dataChart on the page whenever a new view is selected.
-   */
-  viewSelector.on('change', function(ids) {
-      var newIds = {
-      query: {
-        ids: ids
-      }
-    }
-    topContent.set(newIds).execute();
-  });
-
-
-
-/**
- * Bar chart that displays sessions by countries
- */
-   var countries = new gapi.analytics.googleCharts.DataChart({
-    query: {
-      metrics: 'ga:sessions',
-      dimensions: 'ga:country',
-    },
-    chart: {
-      container: 'country-container',
-      type: 'BAR',
-      options: {
-        width: '100%',
-        title: 'Countries of visitors',
-      }
-    }
-  });
-  
-  /**
-   * Render the dataChart on the page whenever a new view is selected.
-   */
-  viewSelector.on('change', function(ids) {
-      var newIds = {
-      query: {
-        ids: ids
-      }
-    }
-    countries.set(newIds).execute();
-  }); 
-   
- 
 });
 
 </script>
@@ -161,66 +86,31 @@ gapi.analytics.ready(function() {
 
 </head>
 
-
-
-
-
-
-
 <!-- HTML Containers to hold the charts/graphs -->
 <body>
 
-<h1>PX Prototype</h1>
 <section id="auth-button"></section>
 <br>
 <section id="view-selector"></section>
 <p></p>
 
 <section id="timeline"></section>
-<p><br /> </p>
+
+
 
 <section id="main-chart-container"></section>
 <section id="breakdown-chart-container"></section>
-<p></p>
-<h1>PX Test 2 AS</h1>
-
-<p></p>
-
 <section id="pie-container"></section>
 <p></p>
-<p>Top content</p>
 <section id="keyword-container"></section>
 <p></p>
-<p>Countries</p>
 <section id="country-container"></section>
-<p>
+<p></p>
 <br>
 <br>
-
-<!-- 
-Internal search function
--->
-
 
 <div>
-<script>
-  (function() {
-    var cx = '007945618422662509104:d-ivgr1rxvg';
-    var gcse = document.createElement('script');
-    gcse.type = 'text/javascript';
-    gcse.async = true;
-    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-        '//cse.google.com/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
-  })();
-</script>
-<gcse:search></gcse:search>
 </div>
-<p></p>
-
 
 </body>
-
-
 </html>
