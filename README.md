@@ -1,17 +1,13 @@
 This repository contains the code for the testing done on http://px300579.enjin.com/
 <br>
 
-
-<ul>
-<li>PX-Test 1 contains the initial code to display and retrieve Google Analytics for stock graphs and tables, the OAUTH authorization code, and internal site search code.</li>
+When embedding the code, follow in this order.
+<ol>
+<li>Analytics tracking code is the code needed to enable tracking of the website from GA. This code should added to every header tag of every page that needs tracking. </li>
+<li>PX-Test 1 contains the initial code to initialise the Embed API in order to display the charts and tables. </li>
 <br>
-<li>PX test 2 - custom dates provides the code for the Charts with date ranges using the custom date range selector from GA API </li>
+<li>PX-Test 2 Main Charts & Tables contains the majority of charts with custom view selectors and date ranges </li>
 <br>
-<li>Goal completion count - JSON format provides the code to output total goal completion count for each goal and total amount of goals completed. Presented in JSON </li>
+<li>JSON reports. Contains retrieval of the queries through JSON format, of their respective chart/table. This page is located on a separate page to avoid exceeding quota limits through the Management API. This page also contains the code to Insert a goal and listing of existing goals</li>
 <br>
-<li>Goal  conversion rate - JSON format provides the code to output goal conversion rate for each goal. Presented in JSON </li>
-<br>
-<li>createGoal stores the code that inserts a goal and its properties from a website </li>
-<br>
-<li>Analytics tracking code is the code needed to enable tracking of the website from GA. This is code inserted into every 'head' tag of the test site and lies in a separate coding editor. </li>
-</ul>
+</ol>
