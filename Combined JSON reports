@@ -5,17 +5,7 @@
 <br>
 <script src="https://apis.google.com/js/client.js?onload=loadLib"</script>
  
- gapi.analytics.ready(function() {
 
-  // Step 1: Authorize the user.
-  // Enter client ID from your google developers console
-  var CLIENT_ID = '571689297980-ur9bp6ab1aqn4g4k7bm0tpapvm4kn15k.apps.googleusercontent.com';
-
-  gapi.analytics.auth.authorize({
-    container: 'auth-button',
-    clientid: CLIENT_ID,
-  });
-  
 </script>
  
 <script>
@@ -34,7 +24,7 @@ function loadLib() {
   // Replace with your client ID from google developers console.
   var CLIENT_ID = '571689297980-ur9bp6ab1aqn4g4k7bm0tpapvm4kn15k.apps.googleusercontent.com';
 
- // Set authorized scope to analytics
+ // Set authorized scope to readonly(viewing), edit (management API writes), analytics (general)
   var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly', 'https://www.googleapis.com/auth/analytics.edit', 'https://www.googleapis.com/auth/analytics'];
 
 
@@ -136,8 +126,12 @@ function handleProfiles(response) {
     // Get the first View (Profile) ID.
     var firstProfileId = response.result.items[0].id;
 
-
-    // EACH QUERY TO RUN SHOULD BE DECLARED BELOW
+    /**
+     * 
+     * EACH QUERY TO RUN SHOULD BE DECLARED BELOW
+     * 
+     **/
+    
     // Query the Core Reporting API for data.
     
     queryGoalCompletions(firstProfileId);
@@ -147,6 +141,7 @@ function handleProfiles(response) {
     queryGoalConversionRate(firstProfileId);
     queryAdQueries(firstProfileId);
     keywordsClicks(firstProfileId);
+    
   } else {
     console.log('No views (profiles) found for this user.');
   }
@@ -155,7 +150,7 @@ function handleProfiles(response) {
   // Query the Core Reporting API for goal total goal completions
   // Shows the list of goals and the completion count for each respective goal and their URL
 function queryGoalCompletions(profileId) {
-  
+ 
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
     'start-date': '30daysAgo',
@@ -172,11 +167,10 @@ function queryGoalCompletions(profileId) {
       console.log(err);
   });
 }
-
- // Query the Core Reporting API for new vs returning visitors
- // Shows how many new visitors came to site, and existing visitors for last 30 days
+  // Query the Core Reporting API for new vs returning visitors
+  // Shows how many new visitors came to site, and existing visitors for last 30 days
 function queryNewOrExisting(profileId) {
- 
+
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
     'start-date': '30daysAgo',
@@ -196,7 +190,7 @@ function queryNewOrExisting(profileId) {
 
   // Query the Core Reporting API for page view counts for each day - last 30 days
 function queryPageViews(profileId) {
-
+ 
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
     'start-date': '30daysAgo',
@@ -216,8 +210,8 @@ function queryPageViews(profileId) {
 
   // Query the Core Reporting API for sessions, goal conversion rate, per session goal value 
   // for their landing page path.
-  function queryLandingValue(profileId) {
-  
+function queryLandingValue(profileId) {
+ 
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
     'start-date': '30daysAgo',
@@ -238,7 +232,7 @@ function queryPageViews(profileId) {
   // Query the Core Reporting API for goal conversion rate for all goals
   // It spans the last 14 days and includes the city which the account creator originated from
 function queryGoalConversionRate(profileId) {
-  
+
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
     'start-date': '30daysAgo',
@@ -277,10 +271,10 @@ function queryAdQueries(profileId) {
   });
 }
 
-  // Query the Core Reporting API for keywords and their clicks for paid Ads.
+   // Query the Core Reporting API for keywords and their clicks for paid Ads.
    // It spans the last 30 days
-  function keywordsClicks(profileId) {
-  
+function keywordsClicks(profileId) {
+ 
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
     'start-date': '30daysAgo',
@@ -309,7 +303,10 @@ function queryAdQueries(profileId) {
 
 
 
-
+<p>
+<p>
+<p>
+<p>
 <h2>Goal completion count</h2>
 <br>
 <p>
@@ -374,4 +371,5 @@ function queryAdQueries(profileId) {
 <p>
 <p>
 <section id="auth-button"></section>
+
 
