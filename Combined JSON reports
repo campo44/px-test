@@ -136,28 +136,32 @@ function handleProfiles(response) {
     // Get the first View (Profile) ID.
     var firstProfileId = response.result.items[0].id;
 
+
+    // EACH QUERY TO RUN SHOULD BE DECLARED BELOW
     // Query the Core Reporting API for data.
+    
     queryGoalCompletions(firstProfileId);
     queryNewOrExisting(firstProfileId);
     queryPageViews(firstProfileId);
     queryLandingValue(firstProfileId);
     queryGoalConversionRate(firstProfileId);
     queryAdQueries(firstProfileId);
+    keywordsClicks(firstProfileId);
   } else {
     console.log('No views (profiles) found for this user.');
   }
 }
 
-
-function queryGoalCompletions(profileId) {
-  // Query the Core Reporting API for goal total goal completion (4 goals)
+  // Query the Core Reporting API for goal total goal completions
   // Shows the list of goals and the completion count for each respective goal and their URL
+function queryGoalCompletions(profileId) {
+  
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
-    'start-date': '18daysAgo',
+    'start-date': '30daysAgo',
     'end-date': 'today',
     'metrics': 'ga:goalCompletionsAll',
-    'dimensions': 'ga:date, ga:hour, ga:minute'
+    'dimensions': 'ga:pagePath'
   })
   .then(function(response) {
     var formattedJson = JSON.stringify(response.result, null, 2);
@@ -169,13 +173,13 @@ function queryGoalCompletions(profileId) {
   });
 }
 
-
+ // Query the Core Reporting API for new vs returning visitors
+ // Shows how many new visitors came to site, and existing visitors for last 30 days
 function queryNewOrExisting(profileId) {
-  // Query the Core Reporting API for new vs returning visitors
-  // Shows how many new visitors came to site, and existing visitors for last 14 days
+ 
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
-    'start-date': '14daysAgo',
+    'start-date': '30daysAgo',
     'end-date': 'today',
     'metrics': 'ga:sessions',
     'dimensions': 'ga:userType'
@@ -190,12 +194,12 @@ function queryNewOrExisting(profileId) {
   });
 }
 
-
+  // Query the Core Reporting API for page view counts for each day - last 30 days
 function queryPageViews(profileId) {
-  // Query the Core Reporting API for page view counts for each day - last 14 days
+
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
-    'start-date': '14daysAgo',
+    'start-date': '30daysAgo',
     'end-date': 'today',
     'metrics': 'ga:pageviews',
     'dimensions': 'ga:date'
@@ -210,13 +214,13 @@ function queryPageViews(profileId) {
   });
 }
 
-
-function queryLandingValue(profileId) {
   // Query the Core Reporting API for sessions, goal conversion rate, per session goal value 
   // for their landing page path.
+  function queryLandingValue(profileId) {
+  
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
-    'start-date': '14daysAgo',
+    'start-date': '30daysAgo',
     'end-date': 'today',
     'metrics': 'ga:sessions, ga:organicSearches, ga:goalConversionRateAll, ga:goalValuePerSession',
     'dimensions': 'ga:landingPagePath'
@@ -231,13 +235,13 @@ function queryLandingValue(profileId) {
   });
 }
 
-
-function queryGoalConversionRate(profileId) {
   // Query the Core Reporting API for goal conversion rate for all goals
   // It spans the last 14 days and includes the city which the account creator originated from
+function queryGoalConversionRate(profileId) {
+  
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
-    'start-date': '14daysAgo',
+    'start-date': '30daysAgo',
     'end-date': 'today',
     'metrics': 'ga:goalConversionRateAll',
     'dimensions': 'ga:city'
@@ -252,10 +256,10 @@ function queryGoalConversionRate(profileId) {
   });
 }
 
-
-function queryAdQueries(profileId) {
-  // Query the Core Reporting API for queries and their impressions, clicks, CTR
+  // Query the Core Reporting API for queries and their impressions, clicks, CTR for paid Ads
   // It spans the last 30 days
+function queryAdQueries(profileId) {
+ 
   gapi.client.analytics.data.ga.get({
     'ids': 'ga:' + profileId,
     'start-date': '30daysAgo',
@@ -266,6 +270,27 @@ function queryAdQueries(profileId) {
   .then(function(response) {
     var formattedJson5 = JSON.stringify(response.result, null, 2);
     document.getElementById('query-output5').value = formattedJson5;
+  })
+  .then(null, function(err) {
+      // Log any errors.
+      console.log(err);
+  });
+}
+
+  // Query the Core Reporting API for keywords and their clicks for paid Ads.
+   // It spans the last 30 days
+  function keywordsClicks(profileId) {
+  
+  gapi.client.analytics.data.ga.get({
+    'ids': 'ga:' + profileId,
+    'start-date': '30daysAgo',
+    'end-date': 'today',
+    'metrics': 'ga:adClicks',
+    'dimensions': 'ga:keyword'
+  })
+  .then(function(response) {
+    var formattedJson6 = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-output6').value = formattedJson6;
   })
   .then(null, function(err) {
       // Log any errors.
@@ -285,24 +310,68 @@ function queryAdQueries(profileId) {
 
 
 
-<p>Goal completion count</p>
-<textarea readonly cols="90" rows="30" id="query-output"></textarea> <br> <br>
-
-<p>New vs Existing Visitor</p>
-<textarea readonly cols="90" rows="30" id="query-output1"></textarea> <br> <br>
+<h2>Goal completion count</h2>
 <br>
-<p>Page views</p>
-<textarea readonly cols="90" rows="30" id="query-output2"></textarea> <br> <br>
+<p>
+<textarea readonly class ="json" cols="90" rows="60" id="query-output"></textarea> <br> <br>
+<p>
+<p>
+<p>
+<p>
+<p>
+<h2>New vs Existing Visitor</h2>
 <br>
-<p>Goal Conversion rate, per session goal value for Landing Page</p>
-<textarea readonly cols="90" rows="30" id="query-output3"></textarea> <br> <br>
+<p>
+<textarea readonly class ="json" cols="90" rows="30" id="query-output1"></textarea> <br> <br>
+<p>
+<p>
+<p>
+<p>
+<p>
+<h2>Page views</h2>
 <br>
-<p>Goal Conversion rate</p>
-<textarea readonly cols="90" rows="30" id="query-output4"></textarea> <br> <br>
+<p>
+<textarea readonly class ="json" cols="90" rows="30" id="query-output2"></textarea> <br> <br>
+<p>
+<p>
+<p>
+<p>
+<p>
+<h2>Goal Conversion rate, per session goal value for Landing Page</h2>
 <br>
-<p>Ad queries, impressions, clicks, CTR</p>
-<textarea readonly cols="90" rows="30" id="query-output5"></textarea> <br> <br>
+<p>
+<textarea readonly class ="json" cols="90" rows="30" id="query-output3"></textarea> <br> <br>
+<p>
+<p>
+<p>
+<p>
+<p>
+<h2>Goal Conversion rate</h2>
 <br>
+<p>
+<textarea readonly class ="json" cols="90" rows="30" id="query-output4"></textarea> <br> <br>
+<p>
+<p>
+<p>
+<p>
+<p>
+<h2>Ad queries, impressions, clicks, CTR</h2>
+<br>
+<p>
+<textarea readonly class ="json" cols="90" rows="30" id="query-output5"></textarea> <br> <br>
+<p>
+<p>
+<p>
+<p>
+<p>
+<h2>Keywords and their clicks</h2>
+<br>
+<p>
+<textarea readonly class ="json" cols="90" rows="30" id="query-output6"></textarea> <br> <br>
+<p>
+<p>
+<p>
+<p>
+<p>
 <section id="auth-button"></section>
-
 
