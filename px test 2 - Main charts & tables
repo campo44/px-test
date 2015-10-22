@@ -7,8 +7,180 @@
 
 <script>
 
+  
 gapi.analytics.ready(function() {
 
+  
+ 
+
+
+   /**
+   * Create a new table to show session number per day
+   */
+  var sessionsPerDay = {
+    query: {
+        'dimensions': 'ga:date',
+        'metrics': 'ga:sessions',
+    
+    },
+    chart: {
+      container: 'top-sessions-container',
+      type: 'LINE',
+      options: {
+        width: '100%',
+        title: 'Sessions Per Day',
+      }
+    }
+  };
+  
+   /**
+   * Query params representing the chart's date range.
+   */
+  var dateRangeSessions = {
+    'start-date': '14daysAgo',
+    'end-date': 'today'
+  };
+
+  /**
+   * Create a new ViewSelector2 instance to be rendered inside of an
+   * element with the id "sessions-container-2-view-container".
+   */
+  var sessionsViewSelector = new gapi.analytics.ext.ViewSelector2({
+    container: 'sessions-container-2-view-selector',
+  }).execute();
+
+  /**
+   * Create a new DateRangeSelector instance to be rendered inside of an
+   * element with the id "date-range-sessions-container", set its date range
+   * and then render it to the page.
+   */
+  var dateRangeSelectorSessions = new gapi.analytics.ext.DateRangeSelector({
+    container: 'date-range-sessions-container'
+  })
+  .set(dateRangeSessions).execute();
+
+  /**
+   * Create a new DataChart instance with the given query parameters
+   * and Google chart options. It will be rendered inside an element
+   * with the id "sessions-container-custom".
+   */
+  var sessionsCustomChart = new gapi.analytics.googleCharts.DataChart(sessionsPerDay)
+     .set({query: dateRangeContent})
+     .set({chart: {container: 'sessions-container-custom'}});
+
+  /**
+   * Register a handler to run whenever the user changes the view.
+   * The handler will update both dataCharts as well as updating the title
+   * of the dashboard.
+   */
+  sessionsViewSelector.on('viewChange', function(data) {
+    sessionsCustomChart.set({query: {ids: data.ids}}).execute();
+
+    var title = document.getElementById('view-name');
+    title.innerHTML = data.property.name + ' (' + data.view.name + ')';
+  });
+
+  /**
+   * Register a handler to run whenever the user changes the date range from
+   * the first datepicker. The handler will update the first dataChart
+   * instance as well as change the dashboard subtitle to reflect the range.
+   */
+  dateRangeSelectorSessions.on('change', function(data) {
+    sessionsCustomChart.set({query: data}).execute();
+
+    // Update the "from" dates text.
+    var datefield = document.getElementById('from-dates');
+    datefield.innerHTML = data['start-date'] + '&mdash;' + data['end-date'];
+  }); 
+   
+   
+   
+   
+    
+  /**
+   * Create a new table to show the top visitors countries 
+   */
+  var topCountries = {
+    query: {
+      metrics: 'ga:sessions',
+      dimensions: 'ga:country',
+    
+    },
+    chart: {
+      container: 'top-country-container',
+      type: 'BAR',
+      options: {
+        width: '100%',
+        title: 'Countries',
+        fontSize: 14
+        
+      }
+    }
+  };
+  
+   /**
+   * Query params representing the chart's date range.
+   */
+  var dateRangeCountries= {
+    'start-date': '14daysAgo',
+    'end-date': 'today'
+  };
+
+  /**
+   * Create a new ViewSelector2 instance to be rendered inside of an
+   * element with the id "countries-container-2-view-container".
+   */
+  var countryViewSelector = new gapi.analytics.ext.ViewSelector2({
+    container: 'countries-container-2-view-selector',
+  }).execute();
+
+  /**
+   * Create a new DateRangeSelector instance to be rendered inside of an
+   * element with the id "date-range-country-container", set its date range
+   * and then render it to the page.
+   */
+  var dateRangeSelectorCountry= new gapi.analytics.ext.DateRangeSelector({
+    container: 'date-range-country-container'
+  })
+  .set(dateRangeCountries).execute();
+
+  /**
+   * Create a new DataChart instance with the given query parameters
+   * and Google chart options. It will be rendered inside an element
+   * with the id "countries-container-custom".
+   */
+  var countryCustomChart = new gapi.analytics.googleCharts.DataChart(topCountries)
+     .set({query: dateRangeContent})
+     .set({chart: {container: 'countries-container-custom'}});
+
+  /**
+   * Register a handler to run whenever the user changes the view.
+   * The handler will update both dataCharts as well as updating the title
+   * of the dashboard.
+   */
+  countryViewSelector.on('viewChange', function(data) {
+    countryCustomChart.set({query: {ids: data.ids}}).execute();
+
+    var title = document.getElementById('view-name');
+    title.innerHTML = data.property.name + ' (' + data.view.name + ')';
+  });
+
+  /**
+   * Register a handler to run whenever the user changes the date range from
+   * the first datepicker. The handler will update the first dataChart
+   * instance as well as change the dashboard subtitle to reflect the range.
+   */
+  dateRangeSelectorCountry.on('change', function(data) {
+    countryCustomChart.set({query: data}).execute();
+
+    // Update the "from" dates text.
+    var datefield = document.getElementById('from-dates');
+    datefield.innerHTML = data['start-date'] + '&mdash;' + data['end-date'];
+  });
+    
+    
+    
+    
 
   /**
    * Create a new table to show most popular pages.
@@ -24,7 +196,8 @@ gapi.analytics.ready(function() {
       type: 'TABLE',
       options: {
         width: '100%',
-        title: 'Top content',
+        title: 'Top landing pages',
+        fontSize: 14
       }
     }
   };
@@ -108,6 +281,7 @@ gapi.analytics.ready(function() {
       options: {
         width: '100%',
         title: 'New vs Existing visitors',
+        fontSize: 14
       }
     }
   };
@@ -191,6 +365,7 @@ var pageViewCustomChart = {
       options: {
         width: '100%',
          title: 'Page views per day',
+         fontSize: 14
       }
     }
   };
@@ -277,7 +452,9 @@ var goalBarChart = {
       container: 'main-goal-chart-container',
      options: {
         width: '100%',
+        height: '650',
          title: 'Goals completed',
+         fontSize: 14
          
       }
     }
@@ -361,6 +538,7 @@ var keywordTable = {
       container: 'main-seo-table-container',
      options: {
         width: '100%',
+        fontSize: 14
         }
     }
   };
@@ -442,6 +620,7 @@ var adClicks = {
       container: 'main-landing-table-container',
      options: {
         width: '100%',
+        fontSize: 14
       }
     }
   };
@@ -525,6 +704,7 @@ var adQueries = {
       container: 'main-queries-table-container',
      options: {
         width: '100%',
+        fontSize: 14
       }
     }
   };
@@ -604,6 +784,49 @@ var adQueries = {
 <body>
 
 
+
+
+<!--
+    top sessions chart containers
+-->
+<section id="sessions-container-2-view-selector"></section>
+<br>
+<section id="top-sessions-container"></section>
+<br>
+<section id="date-range-sessions-container"></section>
+<br>
+<section id="sessions-container-custom"></section>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+
+
+<!--
+    top countries chart containers
+-->
+<section id="countries-container-2-view-selector"></section>
+<br>
+<section id="top-country-container"></section>
+<br>
+<section id="date-range-country-container"></section>
+<br>
+<section id="countries-container-custom"></section>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+
+
+
 <!--
     top content chart containers
 -->
@@ -614,7 +837,15 @@ var adQueries = {
 <section id="date-range-content-container"></section>
 <br>
 <section id="content-container-custom"></section>
-<br>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+
 
 <!--
     pie chart containers
@@ -626,7 +857,16 @@ var adQueries = {
 <section id="date-range-pie-container"></section>
 <br>
 <section id="pie-chart-container-custom"></section>
-<br>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+
+
 <!--
     page view containers
 -->
@@ -637,7 +877,16 @@ var adQueries = {
 <section id="date-range-pageview-container"></section>
 <br>
 <section id="pageview-chart-container-custom"></section>
-<br>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+
+
 <!--
     goals chart containers
 -->
@@ -648,7 +897,16 @@ var adQueries = {
 <section id="date-range-goal-container"></section>
 <br>
 <section id="goal-chart-container-custom"></section>
-<br>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+
+
 <!--
     SEO Query containers
 -->
@@ -659,7 +917,16 @@ var adQueries = {
 <section id="date-range-seo-container"></section>
 <br>
 <section id="seo-table-container-custom"></section>
-<br>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+
+
 <!--
     landing page data containers
 -->
@@ -670,7 +937,15 @@ var adQueries = {
 <section id="date-range-landing-container"></section>
 <br>
 <section id="landing-table-container-custom"></section>
-<br>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+
 
 <!--
     query data containers
@@ -683,7 +958,19 @@ var adQueries = {
 <section id="date-range-query-container"></section>
 <br>
 <section id="query-table-container-custom"></section>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+<p>
+
+<section id="auth-button"></section>
 <br>
+
+
 </body>
 
 </html>
