@@ -108,7 +108,7 @@ gapi.analytics.ready(function() {
     },
     chart: {
       container: 'top-country-container',
-      type: 'BAR',
+      type: 'PIE',
       options: {
         width: '100%',
         title: 'Countries',
