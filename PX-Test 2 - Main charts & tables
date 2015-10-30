@@ -577,7 +577,7 @@ var keywordTable = {
   /**
    * Create a new DataChart instance with the given query parameters
    * and Google chart options. It will be rendered inside an element
-   * with the id "goal-chart-container-custom".
+   * with the id "seo-table-container-custom".
    */
   var seo = new gapi.analytics.googleCharts.DataChart(keywordTable)
      .set({query: dateRangeSeo})
@@ -640,7 +640,7 @@ var adClicks = {
 
   /**
    * Create a new ViewSelector2 instance to be rendered inside of an
-   * element with the id "goal-view-selector".
+   * element with the id "landing-view-selector".
    */
   var viewSelectorClicks = new gapi.analytics.ext.ViewSelector2({
     container: 'landing-view-selector',
@@ -648,7 +648,7 @@ var adClicks = {
 
   /**
    * Create a new DateRangeSelector instance to be rendered inside of an
-   * element with the id "date-range-goal-container", set its date range
+   * element with the id "date-range-landing-container", set its date range
    * and then render it to the page.
    */
   var dateRangeSelectorClicks = new gapi.analytics.ext.DateRangeSelector({
@@ -659,7 +659,7 @@ var adClicks = {
   /**
    * Create a new DataChart instance with the given query parameters
    * and Google chart options. It will be rendered inside an element
-   * with the id "goal-chart-container-custom".
+   * with the id "landing-table-container-custom".
    */
   var clicks = new gapi.analytics.googleCharts.DataChart(adClicks)
      .set({query: dateRangeClicks})
@@ -724,7 +724,7 @@ var adQueries = {
 
   /**
    * Create a new ViewSelector2 instance to be rendered inside of an
-   * element with the id "goal-view-selector".
+   * element with the id "query-view-selector".
    */
   var viewSelectorQueries = new gapi.analytics.ext.ViewSelector2({
     container: 'query-view-selector',
@@ -732,7 +732,7 @@ var adQueries = {
 
   /**
    * Create a new DateRangeSelector instance to be rendered inside of an
-   * element with the id "date-range-goal-container", set its date range
+   * element with the id "date-range-query-container", set its date range
    * and then render it to the page.
    */
   var dateRangeSelectorQueries = new gapi.analytics.ext.DateRangeSelector({
@@ -743,7 +743,7 @@ var adQueries = {
   /**
    * Create a new DataChart instance with the given query parameters
    * and Google chart options. It will be rendered inside an element
-   * with the id "goal-chart-container-custom".
+   * with the id "query-table-container-custom".
    */
   var queries = new gapi.analytics.googleCharts.DataChart(adQueries)
      .set({query: dateRangeQueries})
