@@ -232,26 +232,6 @@ function queryLandingValue(profileId) {
   });
 }
 
-  // Query the Core Reporting API for goal conversion rate for all goals
-  // It spans the last 14 days and includes the city which the account creator originated from
-function queryGoalConversionRate(profileId) {
-
-  gapi.client.analytics.data.ga.get({
-    'ids': 'ga:' + profileId,
-    'start-date': '30daysAgo',
-    'end-date': 'today',
-    'metrics': 'ga:goalConversionRateAll',
-    'dimensions': 'ga:city'
-  })
-  .then(function(response) {
-    var formattedJson4 = JSON.stringify(response.result, null, 2);
-    document.getElementById('query-output4').value = formattedJson4;
-  })
-  .then(null, function(err) {
-      // Log any errors.
-      console.log(err);
-  });
-}
 
   // Query the Core Reporting API for queries and their impressions, clicks, CTR for paid Ads
   // It spans the last 30 days
@@ -265,8 +245,8 @@ function queryAdQueries(profileId) {
     'dimensions': 'ga:adMatchedQuery'
   })
   .then(function(response) {
-    var formattedJson5 = JSON.stringify(response.result, null, 2);
-    document.getElementById('query-output5').value = formattedJson5;
+    var formattedJson4 = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-output4').value = formattedJson4;
   })
   .then(null, function(err) {
       // Log any errors.
@@ -286,8 +266,8 @@ function keywordsClicks(profileId) {
     'dimensions': 'ga:keyword'
   })
   .then(function(response) {
-    var formattedJson6 = JSON.stringify(response.result, null, 2);
-    document.getElementById('query-output6').value = formattedJson6;
+    var formattedJson5 = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-output5').value = formattedJson5;
   })
   .then(null, function(err) {
       // Log any errors.
@@ -309,8 +289,8 @@ function queryCountries(profileId) {
     'dimensions': 'ga:country',
   })
   .then(function(response) {
-    var formattedJson7 = JSON.stringify(response.result, null, 2);
-    document.getElementById('query-output7').value = formattedJson7;
+    var formattedJson6 = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-output6').value = formattedJson6;
   })
   .then(null, function(err) {
       // Log any errors.
@@ -330,8 +310,8 @@ function querySessions(profileId) {
     'dimensions': 'ga:date'
   })
   .then(function(response) {
-    var formattedJson8 = JSON.stringify(response.result, null, 2);
-    document.getElementById('query-output8').value = formattedJson8;
+    var formattedJson7 = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-output7').value = formattedJson7;
   })
   .then(null, function(err) {
       // Log any errors.
@@ -390,7 +370,7 @@ function querySessions(profileId) {
 <p>
 <p>
 <p>
-<h2>Goal Conversion rate</h2>
+<h2>Ad queries, impressions, clicks, CTR</h2>
 <br>
 <p>
 <textarea readonly class ="json" cols="90" rows="30" id="query-output4"></textarea> <br> <br>
@@ -399,7 +379,7 @@ function querySessions(profileId) {
 <p>
 <p>
 <p>
-<h2>Ad queries, impressions, clicks, CTR</h2>
+<h2>Keywords and their clicks</h2>
 <br>
 <p>
 <textarea readonly class ="json" cols="90" rows="30" id="query-output5"></textarea> <br> <br>
@@ -408,7 +388,7 @@ function querySessions(profileId) {
 <p>
 <p>
 <p>
-<h2>Keywords and their clicks</h2>
+<h2>Countries of visitors</h2>
 <br>
 <p>
 <textarea readonly class ="json" cols="90" rows="30" id="query-output6"></textarea> <br> <br>
@@ -417,19 +397,10 @@ function querySessions(profileId) {
 <p>
 <p>
 <p>
-<h2>Countries of visitors</h2>
-<br>
-<p>
-<textarea readonly class ="json" cols="90" rows="30" id="query-output7"></textarea> <br> <br>
-<p>
-<p>
-<p>
-<p>
-<p>
 <h2>Sessions per day</h2>
 <br>
 <p>
-<textarea readonly class ="json" cols="90" rows="30" id="query-output8"></textarea> <br> <br>
+<textarea readonly class ="json" cols="90" rows="30" id="query-output7"></textarea> <br> <br>
 <p>
 <p>
 <p>
