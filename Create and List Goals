@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+
+<script>
+
+
+/** 
+ * GOALS HAVE A MAX OF 20 PER VIEW
+ * accountId: is your GA account Id.  In the GA web url, it is the number following 'a'
+ * webPropertyId: is your GA account Id wrapped inside UA-xxxxxxxx-YY
+ * profileId: is your GA profile Id (view). In the GA web url, it is the number following 'p'
+ * id: is the Id for specific goal. Replace with your ID you wish to enter
+ * internalWebPropertyId: is the internal ID for webProperty. In the GA web url, it is the number following 'w'
+ * name: Goal name
+ * value: Goal value in $ amount
+ * active: boolean, true/false to set it active/inactive
+ * type: type of Goal. Options are URL_DESTINATION, VISIT_TIME_ON_SITE, VISIT_NUM_PAGES, or EVENT
+ * SET URL TO THE DESTINATION OF YOUR PAGE FOR THIS GOAL
+ * 
+ * full list can be found at the following URL:
+ * https://developers.google.com/analytics/devguides/config/mgmt/v3/mgmtReference/management/goals#resource
+ **/
+ 
+ function insertReportGoal() {
+  var request = gapi.client.analytics.management.goals.insert(
+   {
+    'accountId': '66119136',
+    'webPropertyId': 'UA-66119136-1',
+    'profileId': '106535442',
+      'resource': {
+    'id': '13',
+    'internalWebPropertyId': '102504912',
+    'name': 'Countries page',
+    'value': 1,
+    'active': true,
+    'type': 'URL_DESTINATION',
+    'urlDestinationDetails': {
+    'url': 'http://px300579.enjin.com/countrieschart',
+    'caseSensitive': false,
+    'matchType': 'EXACT',
+    'firstStepRequired': false,
+    },
+  }
+})
+.then(function(response) {
+    var formattedJsonDonateGoal = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-outputReportGoal').value = formattedJsonDonateGoal;
+  })
+ }
+
+
+
+
+/**
+ * 
+ * The following functions lists the goals, from ID 1 through to ID 10.
+ * 
+ **/
+
+
+
+
+ function getGoalOne() {
+  var request = gapi.client.analytics.management.goals.get(
+   {
+    'accountId': '66119136',
+    'webPropertyId': 'UA-66119136-1',
+    'profileId': '106535442',
+    'goalId': 1,
+    
+})
+.then(function(response) {
+    var formattedJsonGoalOne = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-outputGoalOne').value = formattedJsonGoalOne;
+  })
+ }
+
+
+ function getGoalTwo() {
+  var request = gapi.client.analytics.management.goals.get(
+   {
+    'accountId': '66119136',
+    'webPropertyId': 'UA-66119136-1',
+    'profileId': '106535442',
+    'goalId': 2,
+    
+})
+.then(function(response) {
+    var formattedJsonGoalOne = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-outputGoalOne').value = formattedJsonGoalOne;
+  })
+ }
+ 
+ 
+ function getGoalTwo() {
+  var request = gapi.client.analytics.management.goals.get(
+   {
+    'accountId': '66119136',
+    'webPropertyId': 'UA-66119136-1',
+    'profileId': '106535442',
+    'goalId': 2,
+    
+})
+.then(function(response) {
+    var formattedJsonGoalOne = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-outputGoalOne').value = formattedJsonGoalOne;
+  })
+ }
+
+ function getGoalThree() {
+  var request = gapi.client.analytics.management.goals.get(
+   {
+    'accountId': '66119136',
+    'webPropertyId': 'UA-66119136-1',
+    'profileId': '106535442',
+    'goalId': 3,
+    
+})
+.then(function(response) {
+    var formattedJsonGoalOne = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-outputGoalOne').value = formattedJsonGoalOne;
+  })
+ }
+
+ function getGoalFour() {
+  var request = gapi.client.analytics.management.goals.get(
+   {
+    'accountId': '66119136',
+    'webPropertyId': 'UA-66119136-1',
+    'profileId': '106535442',
+    'goalId': 4,
+    
+})
+.then(function(response) {
+    var formattedJsonGoalOne = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-outputGoalOne').value = formattedJsonGoalOne;
+  })
+ }
+ 
+  function getGoalFive() {
+  var request = gapi.client.analytics.management.goals.get(
+   {
+    'accountId': '66119136',
+    'webPropertyId': 'UA-66119136-1',
+    'profileId': '106535442',
+    'goalId': 5,
+    
+})
+.then(function(response) {
+    var formattedJsonGoalOne = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-outputGoalOne').value = formattedJsonGoalOne;
+  })
+ }
+
+  function getGoalSix() {
+  var request = gapi.client.analytics.management.goals.get(
+   {
+    'accountId': '66119136',
+    'webPropertyId': 'UA-66119136-1',
+    'profileId': '106535442',
+    'goalId': 6,
+    
+})
+.then(function(response) {
+    var formattedJsonGoalOne = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-outputGoalOne').value = formattedJsonGoalOne;
+  })
+ }
+ 
+   function getGoalSeven() {
+  var request = gapi.client.analytics.management.goals.get(
+   {
+    'accountId': '66119136',
+    'webPropertyId': 'UA-66119136-1',
+    'profileId': '106535442',
+    'goalId': 7,
+    
+})
+.then(function(response) {
+    var formattedJsonGoalOne = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-outputGoalOne').value = formattedJsonGoalOne;
+  })
+ }
+ 
+    function getGoalEight() {
+  var request = gapi.client.analytics.management.goals.get(
+   {
+    'accountId': '66119136',
+    'webPropertyId': 'UA-66119136-1',
+    'profileId': '106535442',
+    'goalId': 8,
+    
+})
+.then(function(response) {
+    var formattedJsonGoalOne = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-outputGoalOne').value = formattedJsonGoalOne;
+  })
+ }
+ 
+     function getGoalNine() {
+  var request = gapi.client.analytics.management.goals.get(
+   {
+    'accountId': '66119136',
+    'webPropertyId': 'UA-66119136-1',
+    'profileId': '106535442',
+    'goalId': 9,
+    
+})
+.then(function(response) {
+    var formattedJsonGoalOne = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-outputGoalOne').value = formattedJsonGoalOne;
+  })
+ }
+ 
+      function getGoalTen() {
+  var request = gapi.client.analytics.management.goals.get(
+   {
+    'accountId': '66119136',
+    'webPropertyId': 'UA-66119136-1',
+    'profileId': '106535442',
+    'goalId': 10,
+    
+})
+.then(function(response) {
+    var formattedJsonGoalOne = JSON.stringify(response.result, null, 2);
+    document.getElementById('query-outputGoalOne').value = formattedJsonGoalOne;
+  })
+ }
+
+
+
+
+</script>
+
+<br>
+
+
+
+
+
+
+
+<html>
+<head> 
+
+
+    
+</head>
+
+<body>
+   <!--
+      USES BOOTSTRAP FOR DROPDOWN LIST. REMOVE IF NECESSARY
+    -->
+<div class="container">
+  <H2>List of Goals</H2>
+  <p></p>                                          
+  <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Goal
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="javascript:getGoalOne();">Navigate Site</a></li>
+      <li><a href="javascript:getGoalTwo();">Like Us</a></li>
+      <li><a href="javascript:getGoalThree();">Home</a></li>
+      <li><a href="javascript:getGoalFour();">Create An Account</a></li>
+      <li><a href="javascript:getGoalFive();">Members Page</a></li>
+      <li><a href="javascript:getGoalSix();">Web Chat</a></li>
+      <li><a href="javascript:getGoalSeven();">My Goal</a></li>
+      <li><a href="javascript:getGoalEight();">Gallery</a></li>
+      <li><a href="javascript:getGoalNine();">My Goal Test</a></li>
+      <li><a href="javascript:getGoalTen();">Make Donation</a></li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
+
+<p></p>
+     <!--
+      Outputs the goal when chosen in dropdown
+    -->
+<textarea readonly class ="json" cols="90" rows="30" id="query-outputGoalOne"></textarea> <br> <br>
+
+     <!-- 
+       Insert a link to post the request to the API
+     -->
+<p></p>
+<a href="javascript:insertReportGoal();">Insert Goal</a>
+<p></p>
+
+    <!--
+      Outputs the report goal in JSON once it has been inserted
+    -->
+<textarea readonly class ="json" cols="90" rows="30" id="query-outputReportGoal"></textarea> <br> <br>
+
+
+
