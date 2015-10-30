@@ -1,0 +1,103 @@
+h1 {
+    color: black;
+font-family: 'Open Sans', sans-serif;
+}
+
+h2 {
+    color: black;
+font-family: 'Open Sans', sans-serif;
+}
+
+a {
+    color: black;
+font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+p {
+    color: black;
+   font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+li {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+li.dropdown-header {
+    color: black;
+    font-size:16px;
+    font-style: italic;
+}
+
+body {
+    color: black;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+  
+td {
+    color: black;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+td[style]{
+    color: black;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+th {
+    color: black;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+div.ViewSelector2-item {
+    margin-top: 15px;
+    font-size:16px;
+}
+      
+label {
+    color: black;    
+    padding-top: 200px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+input[type="date"][max] {
+    margin-left: 16px;
+    font-family: 'Open Sans', sans-serif;
+    font-size:16px;
+}
+
+input[type="date"][min] {
+    margin-left: 22px;
+    margin-top: 14px;
+    font-family: 'Open Sans', sans-serif;
+    width:156px;
+    font-size: 16px;
+}
+
+select.FormField {
+    position: absolute;
+    left: 90px;
+    font-family: 'Open Sans', sans-serif;
+    font-size:16px;
+    margin-left:16px;
+}
+
+.json {
+	width: 600px;
+	height:600px;
+	border: 3px solid #cccccc;
+	padding: 5px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	background-image: url(bg.gif);
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	color: black;
+}
