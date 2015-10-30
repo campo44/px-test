@@ -17,6 +17,9 @@
 
 <!-- First script
     The following code loads the Embed API library and generates the charts, graphs and tables
+    REMOVING THIS CHART CAUSES THE OTHER DATE RANGE AND VIEW SELECTOR CHARTS TO NOT DISPLAY. 
+    THIS SESSIONS CHART BELOW CAN BE HIDDEN THROUGH CSS
+    
 -->
 
 
@@ -100,19 +103,12 @@ gapi.analytics.ready(function() {
    
  
 });
-
 </script>
-
-
 </head>
 
 
+<!-- HTML Containers to hold and display the charts/graphs/tables -->
 
-
-
-
-
-<!-- HTML Containers to hold the charts/graphs -->
 <body>
 
 
@@ -129,7 +125,6 @@ gapi.analytics.ready(function() {
 <p></p>
 <br>
 <br>
-
 
 
 <div>
