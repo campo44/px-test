@@ -1,0 +1,195 @@
+<link type="text/css" rel="stylesheet" media="screen" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"></link>
+<script src="http://files.enjin.com/1057525/bootstrap3/twitter-bootstrap-hover-dropdown.js"></script>
+<script src="http://files.enjin.com/1057525/bootstrap3/profile.js"></script>
+<script src="http://files.enjin.com/1057525/bootstrap3/bootstrap.min.js"></script>
+
+<!-- CSS -->
+<link href="http://files.enjin.com/1057525/bootstrap3/bootstrap.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=News+Cycle' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<style type="text/css">
+
+/*Like button fix*/
+#enjin-like-site-button{
+padding-right:20px;
+margin-left:4px;
+}
+#enjin-like-site .likes{
+margin-left:10px
+}
+#enjin-like-site-button{
+background:url('http://www.enjin.com/assets/20140331508/themes/core/images/icons/elike.png');
+background-position:-50px -50px;
+width:22px;
+height:19px;
+}
+
+#enjin-like-site-button.liked{
+background-position:-50px 0px;
+}
+
+#enjin-like-site {
+padding-left: 13px;
+margin-top: 7px;
+margin-bottom: 5px;
+}
+
+/*Hides nav until loaded*/
+.navbar{
+display:none;
+top:0px;
+}
+
+.navbar-inverse{
+background-color:black!important;
+
+}
+
+/*Positioning of our logo*/
+.navbar-brand img{
+margin-right:20px;
+margin-left:20px;
+vertical-align:middle;
+
+}
+
+/*Non responsive hacks*/
+
+.container .navbar-header,
+.container .navbar-collapse {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+/* Always float the navbar header */
+.navbar-header {
+  float: left;
+}
+
+/*Set the width to the width of your nav*/
+.nav-container{
+width:1000px;
+margin:0 auto;
+}
+
+
+/*End Non-Responsive Hacks*/
+
+ 
+/*Removes our likes etc.*/
+#enjin-bar #enjin-bar-likes{
+display:none !important;
+}
+ 
+/*hide left and right bar*/
+
+#enjin-bar .right,#enjin-bar{
+    display: none;
+}
+
+ 
+ /* Fix for profile info*/
+ 
+ .m_system-profile .profile-sidebar-block-community .community-info .label-info {
+    background-color: transparent !important;
+}
+ 
+ /*Fix for like button hover*/
+
+.dropdown-menu > li > a:hover > [class^="icon-"]{
+background-image:none !important;
+}
+
+.dropdown-menu li a:hover{
+background-color:#33D6FF !important;
+
+}
+ 
+ 
+</style>
+ 
+
+
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="nav-container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="http://px300579.enjin.com/testpage"><img src="http://files.enjin.com/1057525/bootstrap3/logo.png" height=150px width=150px>MOBLE - Google Analytics</a>
+        </div>
+          <ul class="nav navbar-nav" text-align="center">
+            <li><a href="http://px300579.enjin.com/">Enjin Home</a></li>
+            <li><a href="http://px300579.enjin.com/testpage/">MOBLE Home</a></li>
+            
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="300" data-close-others="false">Graphs<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="divider"></li>
+                <li class="dropdown-header">Graphs</li>
+                <li><a href="http://px300579.enjin.com/sessionsperdaychart">Sessions Per Day Chart</a></li>
+                <li><a href="http://px300579.enjin.com/countrieschart">Countries Chart</a></li>
+                <li><a href="http://px300579.enjin.com/visitor">New Vs. Existing Visitors</a></li>
+                <li><a href="http://px300579.enjin.com/pageviews">Page Views Per Day</a></li>
+                <li><a href="http://px300579.enjin.com/goalscompleted">Goals Completed</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Tables</li>
+                <li><a href="http://px300579.enjin.com/pages">Top Content</a></li>
+                <li><a href="http://px300579.enjin.com/landingpages">Landing Pages Goal Conversion Rate</a></li>
+                <li><a href="http://px300579.enjin.com/keywords">Keywords</a></li>
+                <li><a href="http://px300579.enjin.com/matchquery">Matched Search Query</a></li>
+              </ul>
+            </li>
+            
+                        <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="300" data-close-others="false">JSON Reports <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="divider"></li>
+                <li class="dropdown-header">JSON Reports</li>
+                <li><a href="http://px300579.enjin.com/sessionsjson">Sessions Per Day</a></li>
+                <li><a href="http://px300579.enjin.com/countriesjson">Countries</a></li>
+                <li><a href="http://px300579.enjin.com/nvejson">New Vs. Existing Visitor</a></li>
+                <li><a href="http://px300579.enjin.com/pvjson">Page Views</a></li>
+                <li><a href="http://px300579.enjin.com/gccjson">Goal Completion</a></li>
+                <li><a href="http://px300579.enjin.com/gcrjson">Top Content</a></li>
+                <li><a href="http://px300579.enjin.com/gcrsgvjson">Goal Conversion Rate/Session Goal Value Via Landing Page</a></li>
+                 <li><a href="http://px300579.enjin.com/kjson">Keywords And Their Clicks</a></li>
+                <li><a href="http://px300579.enjin.com/aqjson">Ad Queries, Impressions, Clicks CTR</a></li>
+               
+                <li class="divider"></li>
+                <li class="dropdown-header">Insert Goals</li>
+                <li><a href="http://px300579.enjin.com/insertgoals">Goal Insertion</a></li>
+              </ul>
+            </li>
+            
+            <li><a href="http://px300579.enjin.com/forum">Forum</a></li>
+            <li><a href="http://px300579.enjin.com/contact">Contact</a></li>
+            <li><a href="http://px300579.enjin.com/members">Members</a></li>
+            <li class="dropdown" id="boot_username">
+            
+
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="300" data-close-others="false"></a>
+<ul class="dropdown-menu">
+
+</ul>
+</li>
+          </ul>
+   
+      </div>
+      <p>
+      </p>
+            <p>
+      </p>
+            <p>
+      </p>
+            <p>
+      </p>
+    </div>
+
+<script> 
+$(document).ready(function(){ 
+$( ".navbar" ).prependTo($('body'));
+$( ".navbar" ).show();
+$( "#enjin-bar .right" ).show();
+}); 
+</script>
+
