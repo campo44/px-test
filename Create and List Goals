@@ -226,25 +226,13 @@
     document.getElementById('query-outputGoalOne').value = formattedJsonGoalOne;
   })
  }
-
-
-
-
 </script>
 
 <br>
 
-
-
-
-
-
-
 <html>
 <head> 
 
-
-    
 </head>
 
 <body>
