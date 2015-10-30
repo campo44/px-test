@@ -11,4 +11,6 @@ When embedding the code onto your website, follow in these steps.
 <br>
 <li>Combined JSON reports. Contains retrieval of the queries through JSON format, of their respective chart/table. This page is located on a separate page to avoid exceeding quota limits through the Management API. </li>
 <br>
+<li>Create and List Goals has the code for inserting a goal and listing of goals </li>
+<br>
 </ol>
